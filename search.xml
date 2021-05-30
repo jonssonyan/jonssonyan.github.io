@@ -1071,6 +1071,23 @@
 <li>Ifconfig</li>
 <li>ip addr</li>
 </ol>
+<h1 id="Linux-用户管理"><a href="#Linux-用户管理" class="headerlink" title="Linux 用户管理"></a>Linux 用户管理</h1><h2 id="创建一个用户"><a href="#创建一个用户" class="headerlink" title="创建一个用户"></a>创建一个用户</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">adduser [用户名]</span><br></pre></td></tr></table></figure>
+<h2 id="给用户设置密码"><a href="#给用户设置密码" class="headerlink" title="给用户设置密码"></a>给用户设置密码</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">passwd [用户名]</span><br></pre></td></tr></table></figure>
+<h2 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">userdel 选项 [用户名]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>-r 删除用户在本机的所有文件</li>
+</ul>
+<h2 id="用户切换"><a href="#用户切换" class="headerlink" title="用户切换"></a>用户切换</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">su [用户名]</span><br></pre></td></tr></table></figure>
+<p>su是switch user的缩写</p>
+<h2 id="useradd和adduser区别"><a href="#useradd和adduser区别" class="headerlink" title="useradd和adduser区别"></a>useradd和adduser区别</h2><p>useradd不会再home目录下创建用户文件夹，需要加-m参数才会创建对应的文件夹，而adduser则会默认在home文件夹下创建对应的用户文件夹。</p>
+<h1 id="Linux-禁用root远程登陆"><a href="#Linux-禁用root远程登陆" class="headerlink" title="Linux 禁用root远程登陆"></a>Linux 禁用root远程登陆</h1><h2 id="修改SSH配置文件"><a href="#修改SSH配置文件" class="headerlink" title="修改SSH配置文件"></a>修改SSH配置文件</h2><p><code>/etc/ssh/sshd_config</code></p>
+<p>把<code>PermitRootLogin yes</code>改为<code>PermitRootLogin no</code></p>
+<h2 id="重启sshd服务"><a href="#重启sshd服务" class="headerlink" title="重启sshd服务"></a>重启sshd服务</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">service sshd restart</span><br></pre></td></tr></table></figure>
+
+<h1 id="Linux-修改SSH默认端口22"><a href="#Linux-修改SSH默认端口22" class="headerlink" title="Linux 修改SSH默认端口22"></a>Linux 修改SSH默认端口22</h1><h2 id="修改端口配置文件"><a href="#修改端口配置文件" class="headerlink" title="修改端口配置文件"></a>修改端口配置文件</h2><p><code>/etc/ssh/ssh_config</code></p>
+<p>取消<code>Port</code>前的#注释，并将端口<code>22</code>改成<code>65535</code></p>
+<h2 id="重启sshd服务-1"><a href="#重启sshd服务-1" class="headerlink" title="重启sshd服务"></a>重启sshd服务</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">service sshd restart</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>Linux</category>
