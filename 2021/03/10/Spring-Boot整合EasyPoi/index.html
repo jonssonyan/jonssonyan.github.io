@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jonssonyan.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="easypoi功能如同名字easy,主打的功能就是容易,让一个没见接触过poi的人员 就可以方便的写出Excel导出,Excel模板导出,Excel导入,Word模板导出,通过简单的注解和模板 语言(熟悉的表达式语法),完成以前复杂的写法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot整合EasyPoi">
+<meta property="og:url" content="https://jonssonyan.com/2021/03/10/Spring-Boot%E6%95%B4%E5%90%88EasyPoi/index.html">
+<meta property="og:site_name" content="阿壮Jonsson">
+<meta property="og:description" content="easypoi功能如同名字easy,主打的功能就是容易,让一个没见接触过poi的人员 就可以方便的写出Excel导出,Excel模板导出,Excel导入,Word模板导出,通过简单的注解和模板 语言(熟悉的表达式语法),完成以前复杂的写法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jonssonyan.com/images/image-20210310231703378.png">
+<meta property="og:image" content="https://jonssonyan.com/images/image-20210310231835383.png">
+<meta property="article:published_time" content="2021-03-10T15:01:59.000Z">
+<meta property="article:modified_time" content="2021-05-21T13:48:52.680Z">
+<meta property="article:author" content="Jonsson Yan">
+<meta property="article:tag" content="Spring Boot">
+<meta property="article:tag" content="EasyPoi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jonssonyan.com/images/image-20210310231703378.png">
+
+<link rel="canonical" href="https://jonssonyan.com/2021/03/10/Spring-Boot%E6%95%B4%E5%90%88EasyPoi/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Spring Boot整合EasyPoi | 阿壮Jonsson</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">阿壮Jonsson</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">怕什么真理无穷，进一步有进一步的欢喜。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jonssonyan.com/2021/03/10/Spring-Boot%E6%95%B4%E5%90%88EasyPoi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tx.jpg">
+      <meta itemprop="name" content="Jonsson Yan">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿壮Jonsson">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring Boot整合EasyPoi
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-10 23:01:59" itemprop="dateCreated datePublished" datetime="2021-03-10T23:01:59+08:00">2021-03-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-21 21:48:52" itemprop="dateModified" datetime="2021-05-21T21:48:52+08:00">2021-05-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring-Boot/" itemprop="url" rel="index"><span itemprop="name">Spring Boot</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>easypoi功能如同名字easy,主打的功能就是容易,让一个没见接触过poi的人员 就可以方便的写出Excel导出,Excel模板导出,Excel导入,Word模板导出,通过简单的注解和模板 语言(熟悉的表达式语法),完成以前复杂的写法</p>
+<span id="more"></span>
+
+<h1 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">    &lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">    &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">    &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.baomidou&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mybatis-plus-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.4.1&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;cn.afterturn&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;easypoi-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;4.2.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Spring-Boot配置文件-application-properties"><a href="#Spring-Boot配置文件-application-properties" class="headerlink" title="Spring Boot配置文件 application.properties"></a>Spring Boot配置文件 application.properties</h1><p>Spring Boot核心配置文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#定义项目端口</span><br><span class="line">server.port=<span class="number">8888</span></span><br><span class="line">#定义项目的访问目录</span><br><span class="line">server.servlet.context-path=/easypoi</span><br><span class="line">#数据库驱动</span><br><span class="line">spring.datasource.driver-<span class="class"><span class="keyword">class</span>-<span class="title">name</span></span>=com.mysql.cj.jdbc.Driver</span><br><span class="line">#数据库连接地址</span><br><span class="line">spring.datasource.url=jdbc:mysql:<span class="comment">//localhost:3306/easy_poi?useUnicode=true&amp;characterEncoding=utf-8</span></span><br><span class="line">#数据库用户名</span><br><span class="line">spring.datasource.username=root</span><br><span class="line">#数据库用户密码</span><br><span class="line">spring.datasource.password=<span class="number">123456</span></span><br><span class="line">#映射文件的位置</span><br><span class="line">mybatis-plus.mapper-locations=classpath:com/springboot/dao<span class="comment">/*Dao.xml</span></span><br><span class="line"><span class="comment">#类型别名</span></span><br><span class="line"><span class="comment">mybatis-plus.type-aliases-package=com.springboot.entity</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="数据库-SQL"><a href="#数据库-SQL" class="headerlink" title="数据库 SQL"></a>数据库 SQL</h1><p>数据库文件，直接导入即可，MySQL用的5.7版本</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- MySQL dump 10.13  Distrib 5.7.29, for Win64 (x86_64)</span></span><br><span class="line"><span class="comment">--</span></span><br><span class="line"><span class="comment">-- Host: 127.0.0.1    Database: easy_poi</span></span><br><span class="line"><span class="comment">-- ------------------------------------------------------</span></span><br><span class="line"><span class="comment">-- Server version  5.7.29</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */</span>;</span><br><span class="line"><span class="comment">/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */</span>;</span><br><span class="line"><span class="comment">/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */</span>;</span><br><span class="line"><span class="comment">/*!40101 SET NAMES utf8 */</span>;</span><br><span class="line"><span class="comment">/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */</span>;</span><br><span class="line"><span class="comment">/*!40103 SET TIME_ZONE=&#x27;+00:00&#x27; */</span>;</span><br><span class="line"><span class="comment">/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */</span>;</span><br><span class="line"><span class="comment">/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */</span>;</span><br><span class="line"><span class="comment">/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE=&#x27;NO_AUTO_VALUE_ON_ZERO&#x27; */</span>;</span><br><span class="line"><span class="comment">/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--</span></span><br><span class="line"><span class="comment">-- Table structure for table `user`</span></span><br><span class="line"><span class="comment">--</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`user`</span>;</span><br><span class="line"><span class="comment">/*!40101 SET @saved_cs_client     = @@character_set_client */</span>;</span><br><span class="line"><span class="comment">/*!40101 SET character_set_client = utf8 */</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`user`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT <span class="keyword">COMMENT</span> <span class="string">&#x27;主键&#x27;</span>,</span><br><span class="line">  <span class="string">`username`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">&#x27;用户名&#x27;</span>,</span><br><span class="line">  <span class="string">`email`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">&#x27;邮箱&#x27;</span>,</span><br><span class="line">  <span class="string">`phone`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">&#x27;手机号码&#x27;</span>,</span><br><span class="line">  <span class="string">`qq`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">&#x27;qq号码&#x27;</span>,</span><br><span class="line">  <span class="string">`create_time`</span> datetime <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">CURRENT_TIMESTAMP</span> <span class="keyword">COMMENT</span> <span class="string">&#x27;创建时间&#x27;</span>,</span><br><span class="line">  <span class="string">`update_time`</span> datetime <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">CURRENT_TIMESTAMP</span> <span class="keyword">ON</span> <span class="keyword">UPDATE</span> <span class="keyword">CURRENT_TIMESTAMP</span> <span class="keyword">COMMENT</span> <span class="string">&#x27;更新时间&#x27;</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> AUTO_INCREMENT=<span class="number">9</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line"><span class="comment">/*!40101 SET character_set_client = @saved_cs_client */</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--</span></span><br><span class="line"><span class="comment">-- Dumping data for table `user`</span></span><br><span class="line"><span class="comment">--</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLES</span> <span class="string">`user`</span> WRITE;</span><br><span class="line"><span class="comment">/*!40000 ALTER TABLE `user` DISABLE KEYS */</span>;</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user`</span> <span class="keyword">VALUES</span> (<span class="number">1</span>,<span class="string">&#x27;王明&#x27;</span>,<span class="string">&#x27;123456@qq.com&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;2020-11-22 00:22:48&#x27;</span>,<span class="string">&#x27;2020-11-22 00:22:48&#x27;</span>),(<span class="number">2</span>,<span class="string">&#x27;孙红&#x27;</span>,<span class="string">&#x27;123456@qq.com&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;2020-11-22 00:22:48&#x27;</span>,<span class="string">&#x27;2020-11-22 00:22:48&#x27;</span>),(<span class="number">3</span>,<span class="string">&#x27;张飞&#x27;</span>,<span class="string">&#x27;123456@qq.com&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;2020-11-22 00:22:48&#x27;</span>,<span class="string">&#x27;2020-11-22 00:22:48&#x27;</span>),(<span class="number">4</span>,<span class="string">&#x27;李四&#x27;</span>,<span class="string">&#x27;123456@qq.com&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;2020-11-22 00:22:48&#x27;</span>,<span class="string">&#x27;2020-11-22 00:22:48&#x27;</span>),(<span class="number">5</span>,<span class="string">&#x27;王明&#x27;</span>,<span class="string">&#x27;123456@qq.com&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;2020-11-22 00:50:04&#x27;</span>,<span class="string">&#x27;2020-11-22 00:50:04&#x27;</span>),(<span class="number">6</span>,<span class="string">&#x27;孙红&#x27;</span>,<span class="string">&#x27;123456@qq.com&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;2020-11-22 00:50:04&#x27;</span>,<span class="string">&#x27;2020-11-22 00:50:04&#x27;</span>),(<span class="number">7</span>,<span class="string">&#x27;张飞&#x27;</span>,<span class="string">&#x27;123456@qq.com&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;2020-11-22 00:50:04&#x27;</span>,<span class="string">&#x27;2020-11-22 00:50:04&#x27;</span>),(<span class="number">8</span>,<span class="string">&#x27;李四&#x27;</span>,<span class="string">&#x27;123456@qq.com&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>,<span class="string">&#x27;2020-11-22 00:50:04&#x27;</span>,<span class="string">&#x27;2020-11-22 00:50:04&#x27;</span>);</span><br><span class="line"><span class="comment">/*!40000 ALTER TABLE `user` ENABLE KEYS */</span>;</span><br><span class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span>;</span><br><span class="line"><span class="comment">/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*!40101 SET SQL_MODE=@OLD_SQL_MODE */</span>;</span><br><span class="line"><span class="comment">/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */</span>;</span><br><span class="line"><span class="comment">/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */</span>;</span><br><span class="line"><span class="comment">/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */</span>;</span><br><span class="line"><span class="comment">/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */</span>;</span><br><span class="line"><span class="comment">/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */</span>;</span><br><span class="line"><span class="comment">/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Dump completed on 2020-11-22  0:50:16</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Dao"><a href="#Dao" class="headerlink" title="Dao"></a>Dao</h1><h2 id="interface"><a href="#interface" class="headerlink" title="interface"></a>interface</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserDao</span> <span class="keyword">extends</span> <span class="title">BaseMapper</span>&lt;<span class="title">User</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function">List&lt;UserExportVO&gt; <span class="title">select</span><span class="params">(<span class="meta">@Param(&quot;startTime&quot;)</span> Date startTime, <span class="meta">@Param(&quot;endTime&quot;)</span> Date endTime)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insertList</span><span class="params">(<span class="meta">@Param(&quot;userExportVO&quot;)</span> List&lt;UserExportVO&gt; userExportVOS)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="mapper"><a href="#mapper" class="headerlink" title="mapper"></a>mapper</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span> <span class="meta-keyword">PUBLIC</span> <span class="meta-string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="meta-string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.springboot.dao.UserDao&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;userVOMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.springboot.entity.export.UserExportVO&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;id&quot;</span> <span class="attr">column</span>=<span class="string">&quot;id&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;username&quot;</span> <span class="attr">column</span>=<span class="string">&quot;username&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;email&quot;</span> <span class="attr">column</span>=<span class="string">&quot;email&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;phone&quot;</span> <span class="attr">column</span>=<span class="string">&quot;phone&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;qq&quot;</span> <span class="attr">column</span>=<span class="string">&quot;qq&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;createTime&quot;</span> <span class="attr">column</span>=<span class="string">&quot;create_time&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;updateTime&quot;</span> <span class="attr">column</span>=<span class="string">&quot;update_time&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;select&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;userVOMap&quot;</span>&gt;</span></span><br><span class="line">        select id,username,email,phone,qq,create_time,update_time from user</span><br><span class="line">        <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;startTime != null and endTime != null &quot;</span>&gt;</span></span><br><span class="line">                create_time between #&#123;startTime&#125; and #&#123;endTime&#125;</span><br><span class="line">            <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertList&quot;</span>&gt;</span></span><br><span class="line">        insert into user(username,email,phone,qq) values</span><br><span class="line">        <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;userExportVO&quot;</span> <span class="attr">item</span>=<span class="string">&quot;item&quot;</span> <span class="attr">separator</span>=<span class="string">&quot;,&quot;</span>&gt;</span></span><br><span class="line">            (#&#123;item.username&#125;,#&#123;item.email&#125;,#&#123;item.phone&#125;,#&#123;item.qq&#125;)</span><br><span class="line">        <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h1><h2 id="interface-1"><a href="#interface-1" class="headerlink" title="interface"></a>interface</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">userExport</span><span class="params">(HttpServletResponse response, Date startTime, Date endTime)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">userImport</span><span class="params">(MultipartFile file)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Impl"><a href="#Impl" class="headerlink" title="Impl"></a>Impl</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">extends</span> <span class="title">ServiceImpl</span>&lt;<span class="title">UserDao</span>, <span class="title">User</span>&gt; <span class="keyword">implements</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserDao userDao;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">userExport</span><span class="params">(HttpServletResponse response, Date startTime, Date endTime)</span> </span>&#123;</span><br><span class="line">        List&lt;UserExportVO&gt; userExportVOS = userDao.select(startTime, endTime);</span><br><span class="line">        String title = <span class="string">&quot;用户信息表&quot;</span>;</span><br><span class="line">        <span class="keyword">if</span> (startTime != <span class="keyword">null</span> &amp;&amp; endTime != <span class="keyword">null</span>) &#123;</span><br><span class="line">            SimpleDateFormat format = <span class="keyword">new</span> SimpleDateFormat(<span class="string">&quot;yyyy-MM-dd&quot;</span>);</span><br><span class="line">            String startTimeStr = format.format(startTime);</span><br><span class="line">            String endTimeStr = format.format(endTime);</span><br><span class="line">            title = startTimeStr + <span class="string">&quot;至&quot;</span> + endTimeStr + <span class="string">&quot;用户信息表&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        Map&lt;String, Object&gt; oneSheet = ExcelUtil.createOneSheet(title, title, UserExportVO.class, userExportVOS);</span><br><span class="line">        List&lt;Map&lt;String, Object&gt;&gt; list = Lists.newArrayList();</span><br><span class="line">        list.add(oneSheet);</span><br><span class="line">        Workbook workbook = ExcelUtil.mutiSheet(list);</span><br><span class="line">        <span class="comment">//通过输出流输出文件</span></span><br><span class="line">        OutputStream os = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            response.setContentType(<span class="string">&quot;application/msexcel;charset=utf-8&quot;</span>);</span><br><span class="line">            response.setHeader(<span class="string">&quot;Content-Disposition&quot;</span>, <span class="string">&quot;attachment;filename=&quot;</span></span><br><span class="line">                    + <span class="keyword">new</span> String(title.getBytes(), StandardCharsets.ISO_8859_1) + <span class="string">&quot;.xlsx&quot;</span>);</span><br><span class="line">            response.setCharacterEncoding(<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">            os = response.getOutputStream();</span><br><span class="line">            workbook.write(os);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="comment">// 打印异常</span></span><br><span class="line">            log.error(<span class="string">&quot;导出异常：&quot;</span>, e);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="comment">// 关闭资源</span></span><br><span class="line">            <span class="keyword">if</span> (os != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    os.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">userImport</span><span class="params">(MultipartFile file)</span> </span>&#123;</span><br><span class="line">        List&lt;UserExportVO&gt; userExportVOS = Lists.newArrayList();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ImportParams importParams = <span class="keyword">new</span> ImportParams();</span><br><span class="line">            importParams.setHeadRows(<span class="number">2</span>);</span><br><span class="line"><span class="comment">//            importParams.setTitleRows(0);</span></span><br><span class="line">            userExportVOS = ExcelImportUtil.importExcel(file.getInputStream(), UserExportVO.class, importParams);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        userDao.insertList(userExportVOS);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserService userService;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/exportExcel&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exportExcel</span><span class="params">(HttpServletResponse response, <span class="meta">@RequestParam(value = &quot;startTime&quot;, required = false)</span> Date startTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="meta">@RequestParam(value = &quot;endTime&quot;, required = false)</span> Date endTime)</span> </span>&#123;</span><br><span class="line">        userService.userExport(response, startTime, endTime);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/importExcel&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">importExcel</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file)</span> </span>&#123;</span><br><span class="line">        userService.userImport(file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="实体类"><a href="#实体类" class="headerlink" title="实体类"></a>实体类</h1><h2 id="User"><a href="#User" class="headerlink" title="User"></a>User</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1348665906085238496L</span>;</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String email;</span><br><span class="line">    <span class="keyword">private</span> String phone;</span><br><span class="line">    <span class="keyword">private</span> String qq;</span><br><span class="line">    <span class="keyword">private</span> Date createTime;</span><br><span class="line">    <span class="keyword">private</span> Date updateTime;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="UserExportVO"><a href="#UserExportVO" class="headerlink" title="UserExportVO"></a>UserExportVO</h2><p>用于导出时映射数据的实体类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@ExcelTarget(&quot;userExportVO&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserExportVO</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Excel(name = &quot;编号&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="meta">@Excel(name = &quot;用户名&quot;, isImportField = &quot;true&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="meta">@Excel(name = &quot;邮箱&quot;, isImportField = &quot;true&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String email;</span><br><span class="line">    <span class="meta">@Excel(name = &quot;电话号码&quot;, isImportField = &quot;true&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String phone;</span><br><span class="line">    <span class="meta">@Excel(name = &quot;qq号码&quot;, isImportField = &quot;true&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String qq;</span><br><span class="line">    <span class="meta">@Excel(name = &quot;创建时间&quot;, databaseFormat = &quot;yyyy-MM-dd HH:mm:ss&quot;, format = &quot;yyyy-MM-dd HH:mm:ss&quot;, width = 40)</span></span><br><span class="line">    <span class="keyword">private</span> Date createTime;</span><br><span class="line">    <span class="meta">@Excel(name = &quot;更新时间&quot;, databaseFormat = &quot;yyyy-MM-dd HH:mm:ss&quot;, format = &quot;yyyy-MM-dd HH:mm:ss&quot;, width = 40)</span></span><br><span class="line">    <span class="keyword">private</span> Date updateTime;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="工具类-ExcelUtil"><a href="#工具类-ExcelUtil" class="headerlink" title="工具类 ExcelUtil"></a>工具类 ExcelUtil</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExcelUtil</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建workbook,</span></span><br><span class="line"><span class="comment">     * 通过maplist填充Excel内容</span></span><br><span class="line"><span class="comment">     * 返回workbook</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * 进一步使用可以写入流,e.g.</span></span><br><span class="line"><span class="comment">     * FileOutputStream fos = new FileOutputStream(file);</span></span><br><span class="line"><span class="comment">     * workbook.write(fos);</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Workbook <span class="title">mutiSheet</span><span class="params">(List&lt;Map&lt;String, Object&gt;&gt; mapListList)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ExcelExportUtil.exportExcel(mapListList, ExcelType.XSSF);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String, Object&gt; <span class="title">createOneSheet</span><span class="params">(ExportParams exportParams, Class&lt;?&gt; clazz, List&lt;?&gt; data)</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">&quot;title&quot;</span>, exportParams);</span><br><span class="line">        map.put(<span class="string">&quot;entity&quot;</span>, clazz);</span><br><span class="line">        map.put(<span class="string">&quot;data&quot;</span>, data);</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建一个表格并填充内容</span></span><br><span class="line"><span class="comment">     * 返回map供工作簿使用</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String, Object&gt; <span class="title">createOneSheet</span><span class="params">(String sheetName, String title, Class&lt;?&gt; clazz, List&lt;?&gt; data)</span> </span>&#123;</span><br><span class="line">        ExportParams exportParams = <span class="keyword">new</span> ExportParams(title, sheetName, ExcelType.XSSF);</span><br><span class="line">        <span class="keyword">return</span> createOneSheet(exportParams, clazz, data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p><img src="/images/image-20210310231703378.png" alt="image-20210310231703378"></p>
+<h2 id="导出的excel"><a href="#导出的excel" class="headerlink" title="导出的excel"></a>导出的excel</h2><p><img src="/images/image-20210310231835383.png" alt="image-20210310231835383"></p>
+<p>本文源码地址：<a target="_blank" rel="noopener" href="https://github.com/jonssonyan/spring-demo/tree/master/springboot-easypoi">https://github.com/jonssonyan/spring-demo/tree/master/springboot-easypoi</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Jonsson Yan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jonssonyan.com/2021/03/10/Spring-Boot%E6%95%B4%E5%90%88EasyPoi/" title="Spring Boot整合EasyPoi">https://jonssonyan.com/2021/03/10/Spring-Boot整合EasyPoi/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-ND</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring-Boot/" rel="tag"># Spring Boot</a>
+              <a href="/tags/EasyPoi/" rel="tag"># EasyPoi</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/10/Spring-Boot%E6%95%B4%E5%90%88Redis/" rel="prev" title="Spring Boot整合Redis">
+      <i class="fa fa-chevron-left"></i> Spring Boot整合Redis
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/16/Spring-Boot%E6%95%B4%E5%90%88Kafka/" rel="next" title="Spring Boot整合Kafka">
+      Spring Boot整合Kafka <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96"><span class="nav-number">1.</span> <span class="nav-text">引入依赖</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Boot%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-application-properties"><span class="nav-number">2.</span> <span class="nav-text">Spring Boot配置文件 application.properties</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93-SQL"><span class="nav-number">3.</span> <span class="nav-text">数据库 SQL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dao"><span class="nav-number">4.</span> <span class="nav-text">Dao</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#interface"><span class="nav-number">4.1.</span> <span class="nav-text">interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mapper"><span class="nav-number">4.2.</span> <span class="nav-text">mapper</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Service"><span class="nav-number">5.</span> <span class="nav-text">Service</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#interface-1"><span class="nav-number">5.1.</span> <span class="nav-text">interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Impl"><span class="nav-number">5.2.</span> <span class="nav-text">Impl</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Controller"><span class="nav-number">6.</span> <span class="nav-text">Controller</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E4%BD%93%E7%B1%BB"><span class="nav-number">7.</span> <span class="nav-text">实体类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#User"><span class="nav-number">7.1.</span> <span class="nav-text">User</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UserExportVO"><span class="nav-number">7.2.</span> <span class="nav-text">UserExportVO</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E7%B1%BB-ExcelUtil"><span class="nav-number">8.</span> <span class="nav-text">工具类 ExcelUtil</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">9.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">9.1.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA%E7%9A%84excel"><span class="nav-number">9.2.</span> <span class="nav-text">导出的excel</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jonsson Yan"
+      src="/images/tx.jpg">
+  <p class="site-author-name" itemprop="name">Jonsson Yan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jonssonyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jonssonyan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/jonssonyan" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;jonssonyan" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-nd.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jonsson Yan</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

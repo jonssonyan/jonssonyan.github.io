@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jonssonyan.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="GOROOT介绍在安装完Golang语言的时候，所谓的安装路径其实就是你的GOROOT路径，也就是说GOROOT存放的Golang语言内建的程式库的所在位置，而通常你安装完后，你电脑的环境变数就会设好GOROOT路径，当你开发Golang程式的时候，当你import内建的程式库的时候，并不需要额外安装，而当程式运行后，预设也会先去GOROOT路径下寻找相对应的程式库来运行。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GOROOT GOPATH Go Modules三者的关系介绍">
+<meta property="og:url" content="https://jonssonyan.com/2021/03/08/GOROOT-GOPATH-Go-Modules%E4%B8%89%E8%80%85%E7%9A%84%E5%85%B3%E7%B3%BB%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="阿壮Jonsson">
+<meta property="og:description" content="GOROOT介绍在安装完Golang语言的时候，所谓的安装路径其实就是你的GOROOT路径，也就是说GOROOT存放的Golang语言内建的程式库的所在位置，而通常你安装完后，你电脑的环境变数就会设好GOROOT路径，当你开发Golang程式的时候，当你import内建的程式库的时候，并不需要额外安装，而当程式运行后，预设也会先去GOROOT路径下寻找相对应的程式库来运行。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924095034714.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="article:published_time" content="2021-03-08T08:52:45.000Z">
+<meta property="article:modified_time" content="2021-05-21T13:48:52.674Z">
+<meta property="article:author" content="Jonsson Yan">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200924095034714.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70#pic_center">
+
+<link rel="canonical" href="https://jonssonyan.com/2021/03/08/GOROOT-GOPATH-Go-Modules%E4%B8%89%E8%80%85%E7%9A%84%E5%85%B3%E7%B3%BB%E4%BB%8B%E7%BB%8D/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>GOROOT GOPATH Go Modules三者的关系介绍 | 阿壮Jonsson</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">阿壮Jonsson</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">怕什么真理无穷，进一步有进一步的欢喜。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jonssonyan.com/2021/03/08/GOROOT-GOPATH-Go-Modules%E4%B8%89%E8%80%85%E7%9A%84%E5%85%B3%E7%B3%BB%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tx.jpg">
+      <meta itemprop="name" content="Jonsson Yan">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿壮Jonsson">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GOROOT GOPATH Go Modules三者的关系介绍
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-08 16:52:45" itemprop="dateCreated datePublished" datetime="2021-03-08T16:52:45+08:00">2021-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-21 21:48:52" itemprop="dateModified" datetime="2021-05-21T21:48:52+08:00">2021-05-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="GOROOT介绍"><a href="#GOROOT介绍" class="headerlink" title="GOROOT介绍"></a>GOROOT介绍</h1><p>在安装完Golang语言的时候，所谓的安装路径其实就是你的<code>GOROOT</code>路径，也就是说<code>GOROOT</code>存放的Golang语言内建的程式库的所在位置，而通常你安装完后，你电脑的环境变数就会设好<code>GOROOT</code>路径，当你开发Golang程式的时候，当你<code>import</code>内建的程式库的时候，并不需要额外安装，而当程式运行后，预设也会先去<code>GOROOT</code>路径下寻找相对应的程式库来运行。</p>
+<span id="more"></span>
+<h2 id="查看Glang环境变量"><a href="#查看Glang环境变量" class="headerlink" title="查看Glang环境变量"></a>查看Glang环境变量</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> env</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200924095034714.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70#pic_center" alt="环境变量"><br><code>env</code>中有些是我已经修改过的，通常如果你是初次安装Golang语言并且没做什么环境变数设定的话，<code>GOROOT</code>设定路径就是你当初安装Golang语言的路径，而<code>GOPATH</code>通常预设会是使用者目录下的<code>go</code>资料夹。</p>
+<h2 id="使用-go-run-执行某个文件"><a href="#使用-go-run-执行某个文件" class="headerlink" title="使用 go run 执行某个文件"></a>使用 go run 执行某个文件</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后再执行以下指令：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> run main.<span class="keyword">go</span></span><br></pre></td></tr></table></figure>
+
+<p>就会成功输出<code>hello world</code>，<code>go run</code>其实会帮你将程式码进行编译并产生执行档，而编译档跟执行档事实上是存在一个暂存资料夹里面，当运行完此程式就会自动删除。该指令可以想成类似直译的方式运行，而不需要做其他任何环境设定，即可运行。</p>
+<h2 id="引用第三方套件"><a href="#引用第三方套件" class="headerlink" title="引用第三方套件"></a>引用第三方套件</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	router := gin.Default()</span><br><span class="line">	router.Run()</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>import</code>了一个<code>github.com/gin-gonic/gin</code>套件，这个是别人开发的Web Framework套件，是不存在于官方程式库的，而是放在GitHub上的第三方套件。</p>
+<ul>
+<li> 当执行Golang程式码，当需要存取套件时，会先去<code>GOROOT</code>路径下的<code>src</code>资料夹找同等于我们在程式码中<code>import</code>的路径下去找有没有<code>gin</code>这个资料夹，而这资料夹里面就是包含了所有有关于该套件的程式库。</li>
+<li> 如果在<code>GOROOT</code>路径下没有找到，则会往<code>GOPATH</code>路径下的src资料夹找同等于我们在程式码中<code>import</code>的路径下去找有没有<code>gin</code>这个资料夹。</li>
+</ul>
+<p>所以只要<code>GOROOT</code>跟<code>GOPATH</code>路径下都没有找到该套件的话，就无法执行该程式码。</p>
+<h1 id="GOPATH介绍"><a href="#GOPATH介绍" class="headerlink" title="GOPATH介绍"></a>GOPATH介绍</h1><p>根据上面GOROOT的介绍，我们可以知道官方的程式库所在位置就是在GOROOT里面，而GOPATH就是专门存放第三方套件以供我们程式码的需要。那通常开发Golang的话，通常会在重新设定GOPATH的位置。</p>
+<h2 id="GOPATH目录"><a href="#GOPATH目录" class="headerlink" title="GOPATH目录"></a>GOPATH目录</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bin</span><br><span class="line">pkg</span><br><span class="line">src</span><br></pre></td></tr></table></figure>
+
+<p>依照Golang语言的惯例(强制)，GOPATH是指src路径的上一层，我们要在GOPATH路径下主动新增src资料夹，所谓src就是代表source code的意思，也就是放我们开发Golang程式码的相关专案的原始码。</p>
+<h2 id="GOPATH的缺点"><a href="#GOPATH的缺点" class="headerlink" title="GOPATH的缺点"></a>GOPATH的缺点</h2><p>第三方套件只要不是官方程式库，都需要放置在<code>GOPATH/src</code>的路径下才可以使用。</p>
+<p>go get最常用在当我们想用别人公开在GitHub上的套件，可以帮我们从网路上clone到<code>GOPATH/src</code>里面。虽然这样很方便，但是你会发现<code>GOPATH/src</code>下的程式码会很复杂，除了有你自己开发的专案资料夹，也包含其他第三方程式库的专案资料夹。</p>
+<p>再来，如果你开发的专案采用第三方套件是不同版本怎么办？以往的解决方法是要设定多组不同的GOPATH。虽然社群也有开发相对应的<code>package manager</code>，如<code>Vendor</code>、<code>Dep</code>来解决该问题，但毕竟不是官方主导的。</p>
+<h1 id="Go-Modules的诞生"><a href="#Go-Modules的诞生" class="headerlink" title="Go Modules的诞生"></a>Go Modules的诞生</h1><p>为了解决不被GOPATH的问题，因此官方在1.11开始推出了Go Modules的功能。Go Modules解决方式很像是Java看到Maven的做法，将第三方程式库储存在本地的空间，并且给程式去引用。</p>
+<h2 id="设定GO111MODULE环境变数"><a href="#设定GO111MODULE环境变数" class="headerlink" title="设定GO111MODULE环境变数"></a>设定GO111MODULE环境变数</h2><p>总共可以三种不同的值：</p>
+<ul>
+<li>auto<br>默认值，go命令会根据当前目录来决定是否启用modules功能。需要满足两种情形：<br>该专案目录不在<code>GOPATH/src/</code>下<br>当前或上一层目录存在go.mod档案</li>
+<li>on<br>go命令会使用modules，而不会GOPATH目录下查找。</li>
+<li>off<br>go命令将不会支持module功能，寻找套件如以前GOPATH的做法去寻找。</li>
+</ul>
+<p>我是建议要开发Go专案就不再使用GOPATH的功能了，而是采用Go Modules的做法，因此建议都设定为on。<br>而采用Go Modules，下载下来的第三方套件都在哪呢？其实就位在<code>GOPATH/pkg/mod</code>资料夹里面。</p>
+<h2 id="初始化mod"><a href="#初始化mod" class="headerlink" title="初始化mod"></a>初始化mod</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> mod init &lt;module name&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>&lt;module name&gt;</code>可填可不填，不填的话预设就是采用专案资料夹的名称。</p>
+<p>在此档案内可以写以下几个关键字：</p>
+<ul>
+<li>module<br>定义模组路径</li>
+<li>go<br>定义go语言version</li>
+<li>require<br>指定依赖的套件，预设是最新版，可以指定版本号</li>
+<li>exclude<br>排除该套件和其版本</li>
+<li>replace<br>使用不同的套件版本并替换原有的套件版本</li>
+<li>注解<br>// 单行注解<br>/* 多行注解*/<br>indirect 代表被间接导入的依赖包</li>
+</ul>
+<p>假设现在我要引入GitHub上的<code>gin-gonic/gin</code>的套件，如下定义：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module awesomeProject</span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> <span class="number">1.13</span></span><br><span class="line"></span><br><span class="line">require github.com/gin-gonic/gin v1<span class="number">.6</span><span class="number">.3</span></span><br></pre></td></tr></table></figure>
+
+<p>再执行以下指令：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> mod download</span><br></pre></td></tr></table></figure>
+
+<p>会将需要的套件安装在<code>GOPATH/pkg/mod</code>资料夹里面。而且会发现出现一个go.sum的档案，这个档案基本上用来记录套件版本的关系，确保是正确的，是不太需要理会的。</p>
+<blockquote>
+<p>官方说明：除了go.mod之外，go命令还维护一个名为go.sum的文件，其中包含特定模块版本内容的预期加密哈希<br>go命令使用go.sum文件确保这些模块的未来下载检索与第一次下载相同的位，以确保项目所依赖的模块不会出现意外更改，无论是出于恶意、意外还是其他原因。 go.mod和go.sum都应检入版本控制。<br>go.sum 不需要手工维护，所以可以不用太关注。</p>
+</blockquote>
+<p>如果将gin版本改成v1.4.0再重新执行<code>go mod download</code>，就会发现在<code>GOPATH/pkg/mod</code>里面<code>gin-gonic</code>会有两个资料夹分别是<code>gin@v1.4.0</code>、<code>gin@v1.5.0</code>，借此来区分版本。</p>
+<p>当然其实也可以不执行go mod download，而直接运行go build or go install 也会自动将套件安装在相对应的地方。</p>
+<p>还有一种方式直接下载套件而不用在go.mod中定义：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> get github.com/gin-gonic/gin@v1<span class="number">.5</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+
+<p>只要有开启<code>go modules</code>功能，<code>go get</code> 就不会像以前一样在<code>GOPATH/src</code>下放置套件档案，而是会放在<code>GOPATH/pkg/mod</code>里面，并且<code>go.mod</code>会写好引入，这样也就不用使用<code>go mod download</code>指令了。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Jonsson Yan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jonssonyan.com/2021/03/08/GOROOT-GOPATH-Go-Modules%E4%B8%89%E8%80%85%E7%9A%84%E5%85%B3%E7%B3%BB%E4%BB%8B%E7%BB%8D/" title="GOROOT GOPATH Go Modules三者的关系介绍">https://jonssonyan.com/2021/03/08/GOROOT-GOPATH-Go-Modules三者的关系介绍/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-ND</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Go/" rel="tag"># Go</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/08/Spring-Boot%E6%95%B4%E5%90%88Logback/" rel="prev" title="Spring Boot整合Logback">
+      <i class="fa fa-chevron-left"></i> Spring Boot整合Logback
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/08/CSS-flex%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B%E5%85%A5%E9%97%A8/" rel="next" title="CSS flex弹性盒模型入门">
+      CSS flex弹性盒模型入门 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GOROOT%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">GOROOT介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BGlang%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.</span> <span class="nav-text">查看Glang环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-go-run-%E6%89%A7%E8%A1%8C%E6%9F%90%E4%B8%AA%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">使用 go run 执行某个文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9%E5%A5%97%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">引用第三方套件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GOPATH%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">GOPATH介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GOPATH%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.</span> <span class="nav-text">GOPATH目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GOPATH%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">2.2.</span> <span class="nav-text">GOPATH的缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go-Modules%E7%9A%84%E8%AF%9E%E7%94%9F"><span class="nav-number">3.</span> <span class="nav-text">Go Modules的诞生</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E5%AE%9AGO111MODULE%E7%8E%AF%E5%A2%83%E5%8F%98%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">设定GO111MODULE环境变数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96mod"><span class="nav-number">3.2.</span> <span class="nav-text">初始化mod</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jonsson Yan"
+      src="/images/tx.jpg">
+  <p class="site-author-name" itemprop="name">Jonsson Yan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jonssonyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jonssonyan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/jonssonyan" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;jonssonyan" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-nd.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jonsson Yan</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

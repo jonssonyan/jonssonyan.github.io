@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jonssonyan.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="总结一些在Linux环境下安装Nginx1.8 MySQL5.7 JDK7.8 Python3.7等常用软件的教程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux下常用软件安装">
+<meta property="og:url" content="https://jonssonyan.com/2021/03/06/Linux%E4%B8%8B%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:site_name" content="阿壮Jonsson">
+<meta property="og:description" content="总结一些在Linux环境下安装Nginx1.8 MySQL5.7 JDK7.8 Python3.7等常用软件的教程">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-06T15:16:15.000Z">
+<meta property="article:modified_time" content="2021-05-21T13:48:52.677Z">
+<meta property="article:author" content="Jonsson Yan">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jonssonyan.com/2021/03/06/Linux%E4%B8%8B%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux下常用软件安装 | 阿壮Jonsson</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">阿壮Jonsson</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">怕什么真理无穷，进一步有进一步的欢喜。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jonssonyan.com/2021/03/06/Linux%E4%B8%8B%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tx.jpg">
+      <meta itemprop="name" content="Jonsson Yan">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿壮Jonsson">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux下常用软件安装
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-06 23:16:15" itemprop="dateCreated datePublished" datetime="2021-03-06T23:16:15+08:00">2021-03-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-21 21:48:52" itemprop="dateModified" datetime="2021-05-21T21:48:52+08:00">2021-05-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>总结一些在Linux环境下安装Nginx1.8 MySQL5.7 JDK7.8 Python3.7等常用软件的教程</p>
+<span id="more"></span>
+
+<h1 id="Linux下安装Nginx1-8"><a href="#Linux下安装Nginx1-8" class="headerlink" title="Linux下安装Nginx1.8"></a>Linux下安装Nginx1.8</h1><p>Nginx华为镜像站下载地址：<a target="_blank" rel="noopener" href="https://repo.huaweicloud.com/nginx/">https://repo.huaweicloud.com/nginx/</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 安装Nginx前置软件</span><br><span class="line">yum -y install gcc pcre-devel zlib-devel openssl openssl-devel</span><br><span class="line">// 下载</span><br><span class="line">wget https://repo.huaweicloud.com/nginx/nginx-1.8.0.tar.gz</span><br><span class="line">// 解压</span><br><span class="line">tar -zxvf nginx-1.8.0.tar.gz</span><br><span class="line">// 进入nginx目录</span><br><span class="line">cd nginx-1.8.0</span><br><span class="line">// 配置</span><br><span class="line">./configure --prefix=/usr/local/nginx</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">// 测试是否安装成功</span><br><span class="line">cd /usr/loca/nginx/</span><br><span class="line">./sbin/nginx -t</span><br></pre></td></tr></table></figure>
+
+<h2 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx: [alert] could not open error log file: open() &quot;/usr/local/nginx/logs/error.log&quot; failed (2: No such file or directory)</span><br><span class="line">2016/09/13 19:08:56 [emerg] 6996#0: open() &quot;/usr/local/nginx/logs/access.log&quot; failed (2: No such file or directory)</span><br></pre></td></tr></table></figure>
+
+<p>原因分析：nginx/目录下没有logs文件夹</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir logs</span><br><span class="line">chmod 700 logs</span><br></pre></td></tr></table></figure>
+
+<p>正常情况的信息输出：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok</span><br><span class="line">nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动nginx"><a href="#启动nginx" class="headerlink" title="启动nginx"></a>启动nginx</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/nginx/sbin</span><br><span class="line">./nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="防火前设置"><a href="#防火前设置" class="headerlink" title="防火前设置"></a>防火前设置</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看80端口是否开放</span></span><br><span class="line">firewall-cmd --query-port=80/tcp</span><br><span class="line"><span class="meta">#</span><span class="bash"> 将80端口永久开放</span></span><br><span class="line">firewall-cmd --add-port=80/tcp --permanent</span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启防火墙</span></span><br><span class="line">systemctl restart firewalld</span><br></pre></td></tr></table></figure>
+
+<h2 id="Nginx命令"><a href="#Nginx命令" class="headerlink" title="Nginx命令"></a>Nginx命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 重启</span><br><span class="line">nginx -s reload</span><br><span class="line">// 停止</span><br><span class="line">nginx -s stop</span><br><span class="line">// 启动</span><br><span class="line">nginx</span><br></pre></td></tr></table></figure>
+
+<h1 id="Linux下安装Node-js"><a href="#Linux下安装Node-js" class="headerlink" title="Linux下安装Node.js"></a>Linux下安装Node.js</h1><p>Node.js官网：<a target="_blank" rel="noopener" href="https://nodejs.org/en/">https://nodejs.org/en/</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 解压</span><br><span class="line">tar xf node-v14.15.4-linux-x64.tar.xz</span><br><span class="line">// 进入解压目录</span><br><span class="line">cd node-v14.15.4-linux-x64/</span><br><span class="line">// 执行node命令 查看版本</span><br><span class="line">./bin/node -v                               </span><br><span class="line">// 解压文件的 bin 目录底下包含了 node、npm 等命令，我们可以使用 ln 命令来设置软连接</span><br><span class="line">mv /data/tmp/node-v14.15.4-linux-x64 /data/service/</span><br><span class="line">ln -s /data/service/node-v14.15.4-linux-x64/bin/npm /usr/local/bin/ </span><br><span class="line">ln -s /data/service/node-v14.15.4-linux-x64/bin/node /usr/local/bin/</span><br></pre></td></tr></table></figure>
+
+<h1 id="Linux下安装JDK1-8"><a href="#Linux下安装JDK1-8" class="headerlink" title="Linux下安装JDK1.8"></a>Linux下安装JDK1.8</h1><p>Shell一键脚本，用的华为镜像，CentOS7上测试通过</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></span><br><span class="line">PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin</span><br><span class="line">export PATH</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Color</span></span><br><span class="line">red=&#x27;\033[31m&#x27;</span><br><span class="line">green=&#x27;\033[32m&#x27;</span><br><span class="line">yellow=&#x27;\033[33m&#x27;</span><br><span class="line">plain=&#x27;\033[0m&#x27;</span><br><span class="line"></span><br><span class="line">get_char() &#123;</span><br><span class="line">  SAVEDSTTY=$(stty -g)</span><br><span class="line">  stty -echo</span><br><span class="line">  stty cbreak</span><br><span class="line">  dd if=/dev/tty bs=1 count=1 2&gt;/dev/null</span><br><span class="line">  stty -raw</span><br><span class="line">  stty echo</span><br><span class="line">  stty $SAVEDSTTY</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 一些说明</span></span><br><span class="line">clear</span><br><span class="line">echo</span><br><span class="line">echo -e &quot;$&#123;yellow&#125;============================================================$&#123;plain&#125;&quot;</span><br><span class="line">echo &#x27;	System Required: CentOS 7&#x27;</span><br><span class="line">echo &#x27;	Description: Install JDK1.8&#x27;</span><br><span class="line">echo &#x27;	Version: 1.0.0&#x27;</span><br><span class="line">echo &#x27;	Author: Jonsson &lt;yz808@outlook.com&gt;&#x27;</span><br><span class="line">echo &#x27;	Blog: https://blog.csdn.net/y1534414425&#x27;</span><br><span class="line">echo &#x27;	GitHub: https://github.com/jonssonyan&#x27;</span><br><span class="line">echo -e &quot;$&#123;yellow&#125;============================================================$&#123;plain&#125;&quot;</span><br><span class="line">echo</span><br><span class="line">echo &quot;Press any key to start...or Press Ctrl+C to cancel&quot;</span><br><span class="line">char=$(get_char)</span><br><span class="line"><span class="meta">#</span><span class="bash"> 判断是否为root用户</span></span><br><span class="line">[[ $EUID -ne 0 ]] &amp;&amp; echo -e &quot;[$&#123;red&#125;Error$&#123;plain&#125;] This script must be run as root!&quot; &amp;&amp; exit 1</span><br><span class="line"><span class="meta">#</span><span class="bash"> 判断JDK源文件是否下载过</span></span><br><span class="line">if [ ! -f &quot;./jdk-8u202-linux-x64.tar.gz&quot; ]; then</span><br><span class="line">  wget https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u202-linux-x64.tar.gz</span><br><span class="line">fi</span><br><span class="line"><span class="meta">#</span><span class="bash"> 解压JDK到指定文件夹</span></span><br><span class="line">mkdir -p /usr/local/java &amp;&amp; tar -zxvf jdk-8u202-linux-x64.tar.gz -C /usr/local/java</span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加JDK到环境变量</span></span><br><span class="line">chmod 700 /etc/profile</span><br><span class="line">echo &#x27;#Java Env&#x27; &gt;&gt;/etc/profile</span><br><span class="line">echo &#x27;export JAVA_HOME=/usr/local/java/jdk1.8.0_202&#x27; &gt;&gt;/etc/profile</span><br><span class="line">echo &#x27;export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar&#x27; &gt;&gt;/etc/profile</span><br><span class="line">echo &#x27;export PATH=$PATH:$JAVA_HOME/bin&#x27; &gt;&gt;/etc/profile</span><br><span class="line">source /etc/profile</span><br><span class="line"><span class="meta">#</span><span class="bash"> 判断是否为32位系统</span></span><br><span class="line">bit=$(getconf LONG_BIT)</span><br><span class="line">if [ $&#123;bit&#125; -eq 32 ]; then</span><br><span class="line">  sudo yum install glibc.i686</span><br><span class="line">fi</span><br><span class="line"><span class="meta">#</span><span class="bash"> 检测Java是否安装</span></span><br><span class="line">java -version</span><br><span class="line">if [ $? -eq 0 ]; then</span><br><span class="line">  echo -e &quot;$&#123;yellow&#125;============================================================$&#123;plain&#125;&quot;</span><br><span class="line">  echo -e &quot;$&#123;green&#125;JDK1.8安装成功$&#123;plain&#125;&quot;</span><br><span class="line">  echo -e &quot;$&#123;yellow&#125;============================================================$&#123;plain&#125;&quot;</span><br><span class="line">else</span><br><span class="line">  echo -e &quot;$&#123;yellow&#125;============================================================$&#123;plain&#125;&quot;</span><br><span class="line">  echo -e &quot;$&#123;red&#125;JDK1.8安装失败,请检查你的配置$&#123;plain&#125;&quot;</span><br><span class="line">  echo -e &quot;$&#123;yellow&#125;============================================================$&#123;plain&#125;&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h1 id="Linux下安装MySQL5-7-29"><a href="#Linux下安装MySQL5-7-29" class="headerlink" title="Linux下安装MySQL5.7.29"></a>Linux下安装MySQL5.7.29</h1><p>Shell一键脚本，用的华为镜像，CentOS上测试通过</p>
+<p>初始化密码是随机生成的12位，如果想自定义数据库密码请在登录mysql后执行以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SET PASSWORD = PASSWORD(&#x27;你的密码&#x27;);</span><br><span class="line">ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; PASSWORD EXPIRE NEVER;</span><br><span class="line">FLUSH PRIVILEGES;  </span><br></pre></td></tr></table></figure>
+
+<p>设置远程主机登录，注意下面的<code>your username</code> 和 <code>your password</code>改成你需要设置的用户和密码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO &#x27;your username&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;your password&#x27; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></span><br><span class="line">PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin</span><br><span class="line">export PATH</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Color</span></span><br><span class="line">red=&#x27;\033[31m&#x27;</span><br><span class="line">green=&#x27;\033[32m&#x27;</span><br><span class="line">yellow=&#x27;\033[33m&#x27;</span><br><span class="line">plain=&#x27;\033[0m&#x27;</span><br><span class="line"></span><br><span class="line">get_char() &#123;</span><br><span class="line">  SAVEDSTTY=$(stty -g)</span><br><span class="line">  stty -echo</span><br><span class="line">  stty cbreak</span><br><span class="line">  dd if=/dev/tty bs=1 count=1 2&gt;/dev/null</span><br><span class="line">  stty -raw</span><br><span class="line">  stty echo</span><br><span class="line">  stty $SAVEDSTTY</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 一些说明</span></span><br><span class="line">clear</span><br><span class="line">echo</span><br><span class="line">echo -e &quot;$&#123;yellow&#125;============================================================$&#123;plain&#125;&quot;</span><br><span class="line">echo &#x27;	System Required: CentOS 7 64位&#x27;</span><br><span class="line">echo &#x27;	Description: Install MySQL5.7.29&#x27;</span><br><span class="line">echo &#x27;	Version: 1.0.0&#x27;</span><br><span class="line">echo &#x27;	Author: Jonsson &lt;yz808@outlook.com&gt;&#x27;</span><br><span class="line">echo &#x27;	Blog: https://blog.csdn.net/y1534414425&#x27;</span><br><span class="line">echo &#x27;	GitHub: https://github.com/jonssonyan&#x27;</span><br><span class="line">echo -e &quot;$&#123;yellow&#125;============================================================$&#123;plain&#125;&quot;</span><br><span class="line">echo</span><br><span class="line">echo &quot;Press any key to start...or Press Ctrl+C to cancel&quot;</span><br><span class="line">char=$(get_char)</span><br><span class="line"><span class="meta">#</span><span class="bash"> 判断是否为root用户</span></span><br><span class="line">[[ $EUID -ne 0 ]] &amp;&amp; echo -e &quot;[$&#123;red&#125;Error$&#123;plain&#125;] This script must be run as root!&quot; &amp;&amp; exit 1</span><br><span class="line">filename=$(rpm -qa|grep mariadb | wc -l)</span><br><span class="line">if [ $&#123;filename -ne 0&#125; ]; then</span><br><span class="line">    rpm -e --nodeps $&#123;filename&#125; &amp;&amp; rm /etc/my.cnf</span><br><span class="line">fi</span><br><span class="line"><span class="meta">#</span><span class="bash"> 判断MySQL源文件是否下载过</span></span><br><span class="line">if [ ! -f &quot;./mysql-5.7.31-linux-glibc2.12-x86_64.tar.gz&quot; ]; then</span><br><span class="line">  wget https://repo.huaweicloud.com/mysql/Downloads/MySQL-5.7/mysql-5.7.31-linux-glibc2.12-x86_64.tar.gz</span><br><span class="line">fi</span><br><span class="line"><span class="meta">#</span><span class="bash"> 解压MySQL到指定文件夹</span></span><br><span class="line">mkdir -p /usr/local/mysql &amp;&amp; tar -zxvf mysql-5.7.31-linux-glibc2.12-x86_64.tar.gz -C /usr/local/mysql</span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建mysql用户组和用户并修改权限</span></span><br><span class="line">groupadd mysql</span><br><span class="line">useradd -r -g mysql mysql</span><br><span class="line"><span class="meta">#</span><span class="bash">创建目录赋予权限</span></span><br><span class="line">mkdir -p /data/mysql &amp;&amp; chown mysql:mysql -R /data/mysql</span><br><span class="line">if [ ! -f &quot;/etc/my.cnf&quot; ]; then</span><br><span class="line">  touch /etc/my.cnf</span><br><span class="line">fi</span><br><span class="line">echo &quot;[mysqld]&quot; &gt;&gt;/etc/my.cnf</span><br><span class="line">echo &quot;bind-address=0.0.0.0&quot; &gt;&gt;/etc/my.cnf</span><br><span class="line">echo &quot;port=3306&quot; &gt;&gt;/etc/my.cnf</span><br><span class="line">echo &quot;user=mysql&quot; &gt;&gt;/etc/my.cnf</span><br><span class="line">echo &quot;basedir=/usr/local/mysql/mysql-5.7.31-linux-glibc2.12-x86_64&quot; &gt;&gt;/etc/my.cnf</span><br><span class="line">echo &quot;datadir=/data/mysql&quot; &gt;&gt;/etc/my.cnf</span><br><span class="line">echo &quot;socket=/tmp/mysql.sock&quot; &gt;&gt;/etc/my.cnf</span><br><span class="line">echo &quot;log-error=/data/mysql/mysql.err&quot; &gt;&gt;/etc/my.cnf</span><br><span class="line">echo &quot;pid-file=/data/mysql/mysql.pid&quot; &gt;&gt;/etc/my.cnf</span><br><span class="line">echo &quot;# character config&quot; &gt;&gt;/etc/my.cnf</span><br><span class="line">echo &quot;character_set_server=utf8mb4&quot; &gt;&gt;/etc/my.cnf</span><br><span class="line">echo &quot;symbolic-links=0&quot; &gt;&gt;/etc/my.cnf</span><br><span class="line">echo &quot;explicit_defaults_for_timestamp=true&quot; &gt;&gt;/etc/my.cnf</span><br><span class="line">line=$(rpm -qa | grep libaio | wc -l)</span><br><span class="line">if [ $&#123;line&#125; -eq 0 ]; then</span><br><span class="line">  yum install libaio-devel.x86_64</span><br><span class="line">fi</span><br><span class="line"><span class="meta">#</span><span class="bash"> 初始化数据库</span></span><br><span class="line">cd /usr/local/mysql/mysql-5.7.31-linux-glibc2.12-x86_64/bin/ &amp;&amp; chown -R mysql:mysql ./ &amp;&amp; ./mysqld --defaults-file=/etc/my.cnf --basedir=/usr/local/mysql/mysql-5.7.31-linux-glibc2.12-x86_64/ --datadir=/data/mysql/ --user=mysql --initialize</span><br><span class="line">str=$(cat /data/mysql/mysql.err | awk &#x27;END &#123;print&#125;&#x27;)</span><br><span class="line">pwd=$&#123;str:0-12&#125;</span><br><span class="line">cp /usr/local/mysql/mysql-5.7.31-linux-glibc2.12-x86_64/support-files/mysql.server /etc/init.d/mysql</span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加MySQL到环境变量</span></span><br><span class="line">chmod 700 /etc/profile</span><br><span class="line">echo &#x27;#MySQL Env&#x27; &gt;&gt;/etc/profile</span><br><span class="line">echo &#x27;export PATH=$PATH:/usr/local/mysql/mysql-5.7.31-linux-glibc2.12-x86_64/bin&#x27; &gt;&gt;/etc/profile</span><br><span class="line">source /etc/profile</span><br><span class="line">mkdir /var/log/mariadb &amp;&amp; touch /var/log/mariadb/mariadb.log &amp;&amp; chown -R mysql:mysql /var/log/mariadb/</span><br><span class="line">service mysql start</span><br><span class="line">if [ $? -eq 0 ]; then</span><br><span class="line">  echo -e &quot;$&#123;yellow&#125;============================================================$&#123;plain&#125;&quot;</span><br><span class="line">  echo -e &quot;$&#123;green&#125;MySQL5.7.29安装成功$&#123;plain&#125;&quot;</span><br><span class="line">  echo -e &quot;$&#123;green&#125;数据库初始密码为：$&#123;plain&#125;$&#123;red&#125;$&#123;pwd&#125;$&#123;plain&#125;$&#123;green&#125;(请妥善保存密码或者及时修改)$&#123;plain&#125;&quot;</span><br><span class="line">  echo -e &quot;$&#123;yellow&#125;============================================================$&#123;plain&#125;&quot;</span><br><span class="line">else</span><br><span class="line">  echo -e &quot;$&#123;yellow&#125;============================================================$&#123;plain&#125;&quot;</span><br><span class="line">  echo -e &quot;$&#123;red&#125;MySQL5.7.29安装失败,请检查你的配置$&#123;plain&#125;&quot;</span><br><span class="line">  echo -e &quot;$&#123;yellow&#125;============================================================$&#123;plain&#125;&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h1 id="Linux下安装lrzsz"><a href="#Linux下安装lrzsz" class="headerlink" title="Linux下安装lrzsz"></a>Linux下安装lrzsz</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y lrzsz</span><br></pre></td></tr></table></figure>
+
+<h2 id="sz命令发送文件从服务器到本地"><a href="#sz命令发送文件从服务器到本地" class="headerlink" title="sz命令发送文件从服务器到本地"></a>sz命令发送文件从服务器到本地</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sz filename</span><br></pre></td></tr></table></figure>
+
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">[root@node-2 2020-11-02]# sz --help</span><br><span class="line">sz version 0.12.20</span><br><span class="line">Usage: sz [options] file ...</span><br><span class="line">   or: sz [options] -&#123;c|i&#125; COMMAND</span><br><span class="line">Send file(s) with ZMODEM/YMODEM/XMODEM protocol</span><br><span class="line">    (X) = option applies to XMODEM only</span><br><span class="line">    (Y) = option applies to YMODEM only</span><br><span class="line">    (Z) = option applies to ZMODEM only</span><br><span class="line">  -+, --append                append to existing destination file (Z)</span><br><span class="line">  -2, --twostop               use 2 stop bits</span><br><span class="line">  -4, --try-4k                go up to 4K blocksize</span><br><span class="line">      --start-4k              start with 4K blocksize (doesn&#x27;t try 8)</span><br><span class="line">  -8, --try-8k                go up to 8K blocksize</span><br><span class="line">      --start-8k              start with 8K blocksize</span><br><span class="line">  -a, --ascii                 ASCII transfer (change CR/LF to LF)</span><br><span class="line">  -b, --binary                binary transfer</span><br><span class="line">  -B, --bufsize N             buffer N bytes (N==auto: buffer whole file)</span><br><span class="line">  -c, --command COMMAND       execute remote command COMMAND (Z)</span><br><span class="line">  -C, --command-tries N       try N times to execute a command (Z)</span><br><span class="line">  -d, --dot-to-slash          change &#x27;.&#x27; to &#x27;/&#x27; in pathnames (Y/Z)</span><br><span class="line">      --delay-startup N       sleep N seconds before doing anything</span><br><span class="line">  -e, --escape                escape all control characters (Z)</span><br><span class="line">  -E, --rename                force receiver to rename files it already has</span><br><span class="line">  -f, --full-path             send full pathname (Y/Z)</span><br><span class="line">  -i, --immediate-command CMD send remote CMD, return immediately (Z)</span><br><span class="line">  -h, --help                  print this usage message</span><br><span class="line">  -k, --1k                    send 1024 byte packets (X)</span><br><span class="line">  -L, --packetlen N           limit subpacket length to N bytes (Z)</span><br><span class="line">  -l, --framelen N            limit frame length to N bytes (l&gt;=L) (Z)</span><br><span class="line">  -m, --min-bps N             stop transmission if BPS below N</span><br><span class="line">  -M, --min-bps-time N          for at least N seconds (default: 120)</span><br><span class="line">  -n, --newer                 send file if source newer (Z)</span><br><span class="line">  -N, --newer-or-longer       send file if source newer or longer (Z)</span><br><span class="line">  -o, --16-bit-crc            use 16 bit CRC instead of 32 bit CRC (Z)</span><br><span class="line">  -O, --disable-timeouts      disable timeout code, wait forever</span><br><span class="line">  -p, --protect               protect existing destination file (Z)</span><br><span class="line">  -r, --resume                resume interrupted file transfer (Z)</span><br><span class="line">  -R, --restricted            restricted, more secure mode</span><br><span class="line">  -q, --quiet                 quiet (no progress reports)</span><br><span class="line">  -s, --stop-at &#123;HH:MM|+N&#125;    stop transmission at HH:MM or in N seconds</span><br><span class="line">      --tcp                   build a TCP connection to transmit files</span><br><span class="line">      --tcp-server            open socket, wait for connection</span><br><span class="line">  -u, --unlink                unlink file after transmission</span><br><span class="line">  -U, --unrestrict            turn off restricted mode (if allowed to)</span><br><span class="line">  -v, --verbose               be verbose, provide debugging information</span><br><span class="line">  -w, --windowsize N          Window is N bytes (Z)</span><br><span class="line">  -X, --xmodem                use XMODEM protocol</span><br><span class="line">  -y, --overwrite             overwrite existing files</span><br><span class="line">  -Y, --overwrite-or-skip     overwrite existing files, else skip</span><br><span class="line">      --ymodem                use YMODEM protocol</span><br><span class="line">  -Z, --zmodem                use ZMODEM protocol</span><br></pre></td></tr></table></figure>
+
+<p>如果能够确定所传输的文件是文本格式的，使用 <code>sz -a files</code><br>如果是二进制文件，使用 <code>sz -be files</code></p>
+<h2 id="rz命令发送文件从本地到服务器"><a href="#rz命令发送文件从本地到服务器" class="headerlink" title="rz命令发送文件从本地到服务器"></a>rz命令发送文件从本地到服务器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rz filename</span><br></pre></td></tr></table></figure>
+
+<h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">[root@node-2 2020-11-02]# rz --help</span><br><span class="line">rz version 0.12.20</span><br><span class="line">Usage: rz [options] [filename.if.xmodem]</span><br><span class="line">Receive files with ZMODEM/YMODEM/XMODEM protocol</span><br><span class="line">    (X) = option applies to XMODEM only</span><br><span class="line">    (Y) = option applies to YMODEM only</span><br><span class="line">    (Z) = option applies to ZMODEM only</span><br><span class="line">  -+, --append                追加到现有文件</span><br><span class="line">  -a, --ascii                 ascii传输（将CR/LF更改为LF）</span><br><span class="line">  -b, --binary                二进制二进制传输</span><br><span class="line">  -B, --bufsize N             buffer N字节（N==auto：缓冲整个文件）</span><br><span class="line">  -c, --with-crc              使用16位crc（X）</span><br><span class="line">  -C, --allow-remote-commands 允许远程命令允许执行远程命令（Z）</span><br><span class="line">  -D, --null                  将所有接收到的数据写入/dev/null</span><br><span class="line">      --delay-startup N       睡眠N秒再做任何事情</span><br><span class="line">  -e, --escape                转义转义控制字符（Z）</span><br><span class="line">  -E, --rename                重命名重命名已存在的所有文件</span><br><span class="line">      --errors N              每N字节生成一个CRC错误（调试）</span><br><span class="line">  -h, --help                  帮助，打印此用法消息</span><br><span class="line">  -m, --min-bps N             N如果bps低于N，停止传输</span><br><span class="line">  -M, --min-bps-time N        至少持续N秒（默认值：120）</span><br><span class="line">  -O, --disable-timeouts      禁用超时代码，永远等待数据</span><br><span class="line">      --o-sync                同步写入输出</span><br><span class="line">  -p, --protect               保护保护现有文件</span><br><span class="line">  -q, --quiet                 安静，没有进度报告</span><br><span class="line">  -r, --resume                尝试恢复中断的文件传输（Z）</span><br><span class="line">  -R, --restricted            限制，更安全的模式</span><br><span class="line">  -s, --stop-at &#123;HH:MM|+N&#125;    在HH:MM|+N秒内停止传输</span><br><span class="line">  -S, --timesync              请求远程时间（两次：设置本地时间）</span><br><span class="line">      --syslog[=off]          如果可能，请打开或关闭syslog</span><br><span class="line">  -t, --timeout N             将timeout设置为十分之N秒</span><br><span class="line">  -u, --keep-uppercase        保持大写文件名</span><br><span class="line">  -U, --unrestrict            禁用限制模式（如允许）</span><br><span class="line">  -v, --verbose               be verbose，提供调试信息</span><br><span class="line">  -w, --windowsize N          Window为N字节（Z）</span><br><span class="line">  -X  --xmodem                使用xmodem协议</span><br><span class="line">  -y, --overwrite             是，删除现有文件（如果有）</span><br><span class="line">      --ymodem                使用ymodem协议</span><br><span class="line">  -Z, --zmodem                使用zmodem协议</span><br></pre></td></tr></table></figure>
+
+<h1 id="Linux下安装Python3-7-9和pip3"><a href="#Linux下安装Python3-7-9和pip3" class="headerlink" title="Linux下安装Python3.7.9和pip3"></a>Linux下安装Python3.7.9和pip3</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// 安装依赖包，如果不安装将导致编译失败，或者功能缺失</span><br><span class="line">yum -y install openssl-devel zlib-devel gcc</span><br><span class="line">// 在local目录下创建python3目录，供放置最终的可执行文件</span><br><span class="line">mkdir /usr/local/python3</span><br><span class="line">// 先去python官网下载python3源码安装包</span><br><span class="line">wget https://www.python.org/ftp/python/3.7.9/Python-3.7.9.tgz</span><br><span class="line">// 解压</span><br><span class="line">tar -xvf Python-3.7.9.tgz</span><br><span class="line">// 转到解压文件夹下</span><br><span class="line">cd Python-3.7.9</span><br><span class="line">// 配置安装目录 在python安装配置中一定要加上`--enable-shared`参数就可以生成对应动态链接库</span><br><span class="line">./configure --enable-shared --prefix=/usr/local/python3</span><br><span class="line">// 编译源码执行源码安装</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">// 在 /usr/bin 文件夹下创建python3软链接，方便直接使用命令名启动</span><br><span class="line">ln -s /usr/local/python3/bin/python3  /usr/bin/python3</span><br><span class="line">// 任意切换到某一个文件夹，验证是否能启动 python3</span><br><span class="line">python3 -V # 查看python版本</span><br><span class="line">python3  # 看到进入Python交互环境表示安装成功</span><br><span class="line">// 配置 pip3 软链接</span><br><span class="line">ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3</span><br><span class="line">// 验证 pip3 是否可用</span><br><span class="line">pip3 -V  # 查看pip版本</span><br><span class="line">pip3 install numpy  # 任意测试安装一个包，我这里是 numpy，可用更换为自己需要的包名</span><br></pre></td></tr></table></figure>
+<p>如果安装过程里还有缺失的依赖库提示，那么根据提示安装即可</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Jonsson Yan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jonssonyan.com/2021/03/06/Linux%E4%B8%8B%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" title="Linux下常用软件安装">https://jonssonyan.com/2021/03/06/Linux下常用软件安装/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-ND</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/06/%E5%B1%82%E6%AC%A1%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/" rel="prev" title="层次数据结构的数据表设计">
+      <i class="fa fa-chevron-left"></i> 层次数据结构的数据表设计
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/06/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AE%B0%E5%BD%95/" rel="next" title="Java并发编程记录">
+      Java并发编程记录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E4%B8%8B%E5%AE%89%E8%A3%85Nginx1-8"><span class="nav-number">1.</span> <span class="nav-text">Linux下安装Nginx1.8</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.</span> <span class="nav-text">错误信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">解决方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8nginx"><span class="nav-number">1.3.</span> <span class="nav-text">启动nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B2%E7%81%AB%E5%89%8D%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.4.</span> <span class="nav-text">防火前设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.</span> <span class="nav-text">Nginx命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E4%B8%8B%E5%AE%89%E8%A3%85Node-js"><span class="nav-number">2.</span> <span class="nav-text">Linux下安装Node.js</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E4%B8%8B%E5%AE%89%E8%A3%85JDK1-8"><span class="nav-number">3.</span> <span class="nav-text">Linux下安装JDK1.8</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E4%B8%8B%E5%AE%89%E8%A3%85MySQL5-7-29"><span class="nav-number">4.</span> <span class="nav-text">Linux下安装MySQL5.7.29</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E4%B8%8B%E5%AE%89%E8%A3%85lrzsz"><span class="nav-number">5.</span> <span class="nav-text">Linux下安装lrzsz</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">5.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sz%E5%91%BD%E4%BB%A4%E5%8F%91%E9%80%81%E6%96%87%E4%BB%B6%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%88%B0%E6%9C%AC%E5%9C%B0"><span class="nav-number">5.2.</span> <span class="nav-text">sz命令发送文件从服务器到本地</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0"><span class="nav-number">5.2.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rz%E5%91%BD%E4%BB%A4%E5%8F%91%E9%80%81%E6%96%87%E4%BB%B6%E4%BB%8E%E6%9C%AC%E5%9C%B0%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">5.3.</span> <span class="nav-text">rz命令发送文件从本地到服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0-1"><span class="nav-number">5.3.1.</span> <span class="nav-text">参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E4%B8%8B%E5%AE%89%E8%A3%85Python3-7-9%E5%92%8Cpip3"><span class="nav-number">6.</span> <span class="nav-text">Linux下安装Python3.7.9和pip3</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jonsson Yan"
+      src="/images/tx.jpg">
+  <p class="site-author-name" itemprop="name">Jonsson Yan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jonssonyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jonssonyan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/jonssonyan" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;jonssonyan" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-nd.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jonsson Yan</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

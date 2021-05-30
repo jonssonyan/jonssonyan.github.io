@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jonssonyan.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="记录在Windows环境下配置开发环境，Go开发环境搭建，PHP开发环境搭建，Zookeeper安装，Python开发环境，Maven，Gradle配置等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows系统配置开发环境">
+<meta property="og:url" content="https://jonssonyan.com/2021/04/13/Windows%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:site_name" content="阿壮Jonsson">
+<meta property="og:description" content="记录在Windows环境下配置开发环境，Go开发环境搭建，PHP开发环境搭建，Zookeeper安装，Python开发环境，Maven，Gradle配置等">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jonssonyan.com/images/image-20210107220321831.png">
+<meta property="og:image" content="https://jonssonyan.com/images/image-20210107234917671.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201023144401353.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201023144247610.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020102414003285.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924151044223.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924151202425.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://jonssonyan.com/images/image-20210115134542316.png">
+<meta property="og:image" content="https://jonssonyan.com/images/Snipaste_2021-03-08_13-56-47.png">
+<meta property="og:image" content="https://jonssonyan.com/images/Snipaste_2021-03-08_13-56-56.png">
+<meta property="og:image" content="https://jonssonyan.com/images/Snipaste_2021-03-08_13-57-05.png">
+<meta property="og:image" content="https://jonssonyan.com/images/image-20210204154101386.png">
+<meta property="og:image" content="https://jonssonyan.com/images/image-20210204154423648.png">
+<meta property="og:image" content="https://jonssonyan.com/images/image-20210204154606612.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201206172813488.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201206173044512.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201206174214207.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2021-04-13T03:31:38.000Z">
+<meta property="article:modified_time" content="2021-05-21T13:48:52.684Z">
+<meta property="article:author" content="Jonsson Yan">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="PhpStorm">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="GoLand">
+<meta property="article:tag" content="OpenCV">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="pip">
+<meta property="article:tag" content="Zookeeper">
+<meta property="article:tag" content="Maven">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jonssonyan.com/images/image-20210107220321831.png">
+
+<link rel="canonical" href="https://jonssonyan.com/2021/04/13/Windows%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Windows系统配置开发环境 | 阿壮Jonsson</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">阿壮Jonsson</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">怕什么真理无穷，进一步有进一步的欢喜。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jonssonyan.com/2021/04/13/Windows%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tx.jpg">
+      <meta itemprop="name" content="Jonsson Yan">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿壮Jonsson">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows系统配置开发环境
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-13 11:31:38" itemprop="dateCreated datePublished" datetime="2021-04-13T11:31:38+08:00">2021-04-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-21 21:48:52" itemprop="dateModified" datetime="2021-05-21T21:48:52+08:00">2021-05-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" itemprop="url" rel="index"><span itemprop="name">开发环境</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>记录在Windows环境下配置开发环境，Go开发环境搭建，PHP开发环境搭建，Zookeeper安装，Python开发环境，Maven，Gradle配置等</p>
+<span id="more"></span>
+
+<h1 id="PhpStorm配置PHP开发环境"><a href="#PhpStorm配置PHP开发环境" class="headerlink" title="PhpStorm配置PHP开发环境"></a>PhpStorm配置PHP开发环境</h1><p>PhpStorm是JetBrains公司推出的PHP集成开发环境，开发PHP极其的丝滑般润滑，本文记录PhpStorm下配置PHP开发环境。PHP的开发环境是目前我接触的语言里配置比较繁琐的。</p>
+<h2 id="下载php"><a href="#下载php" class="headerlink" title="下载php"></a>下载php</h2><p>进入PHP下载地址 <a target="_blank" rel="noopener" href="http://windows.php.net/download">http://windows.php.net/download</a> 下载最新线程安全版PHP zip压缩包，解压缩后放在想要安装的路径下。</p>
+<p><strong>注意：</strong> 下载的PHP VC版本不能比前面安装的vc redist版高。</p>
+<p>进入PHP安装目录，复制一份<strong>php.ini-development</strong> 改名为 <strong>php.ini</strong> 放到安装路径下，打开找到 <strong>;extension_dir=ext</strong>，去掉注释符，将值改为 <strong>PHP安装路径\ext</strong>。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extension_dir = <span class="string">&quot;D:\Applications\php-7.2.34-Win32-VC15-x64\ext&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>php 要使能 MySQL 的话还要在 ini 文件中找到下面几句话，取消注释</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">extension=mysqli</span><br><span class="line">date.timezone = Asia/Shanghai</span><br></pre></td></tr></table></figure>
+<h2 id="下载phpstorm"><a href="#下载phpstorm" class="headerlink" title="下载phpstorm"></a>下载phpstorm</h2><p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/zh-cn/phpstorm/">https://www.jetbrains.com/zh-cn/phpstorm/</a></p>
+<h2 id="xdebug"><a href="#xdebug" class="headerlink" title="xdebug"></a>xdebug</h2><p>官网：<a target="_blank" rel="noopener" href="https://xdebug.org/download">https://xdebug.org/download</a></p>
+<p>配置php调试有很多种办法，最常用的就是使用xdebug，也有另一种方法，就是安装一个谷歌浏览器插件，感觉实用性不高所以这里使用xdebug的方式</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>官网上关于描述：<a target="_blank" rel="noopener" href="https://xdebug.org/docs/upgrade_guide#changed-xdebug.remote_enable">https://xdebug.org/docs/upgrade_guide#changed-xdebug.remote_enable</a></p>
+<p>百度上的一些教程配置都比较老，在之后的xdebug版本中配置有所变化具体看官网解释</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[Xdebug]</span><br><span class="line">;指定Xdebug扩展文件的绝对路径</span><br><span class="line">zend_extension=<span class="string">&quot;D:\Applications\php-7.2.34-Win32-VC15-x64\ext\php_xdebug-3.0.0-7.2-vc15-x86_64.dll&quot;</span></span><br><span class="line"></span><br><span class="line">xdebug.mode=debug</span><br><span class="line">xdebug.client_host=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line">xdebug.client_port=<span class="number">9000</span></span><br><span class="line">xdebug.output_dir=<span class="string">&quot;D:\Applications\php-7.2.34-Win32-VC15-x64\xdebug&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20210107220321831.png" alt="image-20210107220321831"></p>
+<p>注意：配置的端口（<code>xdebug.client_port</code>）要和phpstorm上面设置的端口一致</p>
+<p><img src="/images/image-20210107234917671.png" alt="image-20210107234917671"></p>
+<p>xdebug使用教程：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Qx411f7pF?p=2">https://www.bilibili.com/video/BV1Qx411f7pF?p=2</a></p>
+<h2 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h2><p>下载：<a target="_blank" rel="noopener" href="http://nginx.org/en/download.html">http://nginx.org/en/download.html</a></p>
+<h2 id="Composer"><a href="#Composer" class="headerlink" title="Composer"></a>Composer</h2><p>国内官网：<a target="_blank" rel="noopener" href="https://www.phpcomposer.com/">https://www.phpcomposer.com/</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>这里用的方式是用的<code>composer.phar</code>免安装的配置方式，当然你也可以去官网下载完整安装包，无脑下一步即可。</p>
+<h3 id="Mac-或-Linux-系统"><a href="#Mac-或-Linux-系统" class="headerlink" title="Mac 或 Linux 系统"></a>Mac 或 Linux 系统</h3><p>打开命令行窗口并执行如下命令将前面下载的 <code>composer.phar</code> 文件移动到 <code>/usr/local/bin/</code> 目录下面：</p>
+<p>复制</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv composer.phar /usr/<span class="built_in">local</span>/bin/composer</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-系统"><a href="#Windows-系统" class="headerlink" title="Windows 系统"></a>Windows 系统</h3><ol>
+<li>找到并进入 PHP 的安装目录（和你在命令行中执行的 <code>php</code> 指令应该是同一套 PHP）。</li>
+<li>将 <code>composer.phar</code> 复制到 PHP 的安装目录下面，也就是和 <code>php.exe</code> 在同一级目录。</li>
+<li>在 PHP 安装目录下新建一个 <code>composer.bat</code> 文件，并将下列代码保存到此文件中。</li>
+</ol>
+<p>复制</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@php <span class="string">&quot;%~dp0composer.phar&quot;</span> %*</span><br></pre></td></tr></table></figure>
+
+<p>最后重新打开一个命令行窗口试一试执行 <code>composer --version</code> 看看是否正确输出版本号。</p>
+<h3 id="可能出现的报错"><a href="#可能出现的报错" class="headerlink" title="可能出现的报错"></a>可能出现的报错</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Composer\<span class="built_in">Exception</span>\NoSslException]</span><br><span class="line">  The openssl extension is required <span class="keyword">for</span> SSL/TLS protection but is not available. <span class="keyword">If</span> you can not enable the openssl ex</span><br><span class="line">  tension, you can disable this <span class="built_in">error</span>, at your own risk, by setting the <span class="string">&#x27;disable-tls&#x27;</span> option to <span class="literal">true</span>.</span><br></pre></td></tr></table></figure>
+
+<p>关闭Composer的TLS来修复，注意：<strong>它不安全</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer config -g -- disable-tls <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>或者开启php.ini中的</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extension=openssl</span><br></pre></td></tr></table></figure>
+
+<p>特别提醒：</p>
+<p>如果设置为true，则将使用HTTP尝试所有HTTPS URL，而不执行网络级加密。启用这是一个安全风险，不推荐。更好的方法是在php.ini中启用php_openssl和openssl扩展。</p>
+<h3 id="设置国内镜像"><a href="#设置国内镜像" class="headerlink" title="设置国内镜像"></a>设置国内镜像</h3><h4 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/</span><br></pre></td></tr></table></figure>
+
+<h4 id="局部配置"><a href="#局部配置" class="headerlink" title="局部配置"></a>局部配置</h4><p>仅修改当前工程</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer config repo.packagist composer https://mirrors.aliyun.com/composer/</span><br></pre></td></tr></table></figure>
+
+<h4 id="取消配置"><a href="#取消配置" class="headerlink" title="取消配置"></a>取消配置</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer config --unset repos.packagist</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改composer缓存路径"><a href="#修改composer缓存路径" class="headerlink" title="修改composer缓存路径"></a>修改composer缓存路径</h3><p><code>[cache-dir]</code>是Composer 的缓存目录，默认位置是<code>C:/Users/Jonsson/AppData/Local/Composer</code></p>
+<p><code>[vendor-dir]</code>软件包的默认安装位置，默认位置是<code>C:/Users/Jonsson/vendor</code></p>
+<p>在<code>php</code>安装目录下新建<code>Composer</code>文件夹，在<code>Composer</code>文件夹内再新建<code>cache-dir</code>，<code>vendor-dir</code>文件夹，输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">composer config -g cache-dir D:/Applications/php-7.2.34-Win32-VC15-x64/Composer/cache-dir</span><br><span class="line">composer config -g vendor-dir D:/Applications/php-7.2.34-Win32-VC15-x64/Composer/vendor-dir // 不建议修改vendor-dir，指定工程中使用composer install也会安装到这个目录，原因未知</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">composer init // 初始化composer.json文件</span><br><span class="line">composer list // 列出所有可用的命令</span><br><span class="line">composer install // 读取composer.json内容，解析依赖关系，安装依赖包到vendor目录下</span><br><span class="line">composer update // 更新最新的依赖关系到compsoer.lock文件，解析最新的依赖关系并且写入composer.lock文件</span><br><span class="line">composer search packagename // 搜索包，packagename替换为你想查找的包名称</span><br><span class="line">composer require packagename // 添加对packagename的依赖，packagename可修改为你想要的包名称</span><br><span class="line">composer show packagename</span><br><span class="line">composer self-update // 更新 composer.phar文件自身</span><br><span class="line">composer dump-autoload --optimize // 优化一下自动加载</span><br><span class="line">composer command --help // 选项查看帮助信息</span><br></pre></td></tr></table></figure>
+
+<h1 id="GoLand配置Go开发环境搭建"><a href="#GoLand配置Go开发环境搭建" class="headerlink" title="GoLand配置Go开发环境搭建"></a>GoLand配置Go开发环境搭建</h1><p>不管学习什么编程语言一开始都会经历的四步</p>
+<ul>
+<li>开发工具安装</li>
+<li>IDE安装</li>
+<li>设置 依赖/包 国内镜像</li>
+<li>项目构建工具，管理依赖/包</li>
+</ul>
+<h2 id="Golang安装"><a href="#Golang安装" class="headerlink" title="Golang安装"></a>Golang安装</h2><p>官网（需要各自手段）：<a target="_blank" rel="noopener" href="https://golang.org/">https://golang.org</a><br>GitHub地址：<a target="_blank" rel="noopener" href="https://github.com/golang/go">https://github.com/golang/go</a><br>Golang中文网：<a target="_blank" rel="noopener" href="http://docscn.studygolang.com/">http://docscn.studygolang.com</a></p>
+<h2 id="GoLand-IDE安装"><a href="#GoLand-IDE安装" class="headerlink" title="GoLand IDE安装"></a>GoLand IDE安装</h2><p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/zh-cn/go/">https://www.jetbrains.com/zh-cn/go/</a></p>
+<h2 id="设置-依赖-包-国内镜像"><a href="#设置-依赖-包-国内镜像" class="headerlink" title="设置 依赖/包 国内镜像"></a>设置 依赖/包 国内镜像</h2><p><img src="https://img-blog.csdnimg.cn/20201023144401353.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>常用镜像地址：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">https://mirrors.aliyun.com/goproxy // 阿里云</span><br><span class="line">https://goproxy.io // 微软</span><br><span class="line">https://goproxy.cn // 七牛云</span><br><span class="line">https://gocenter.io // GoCenter</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改GOPATH路径"><a href="#修改GOPATH路径" class="headerlink" title="修改GOPATH路径"></a>修改<code>GOPATH</code>路径</h3><p><code>windows</code>上默认路径<code>%USERPROFILE%\go</code><br><code>mac&amp;linux</code> 上默认路径<code>$HOME/go</code></p>
+<p>我这里演示的是将<code>GOPATH</code>路径设置为<code>D:\gopath</code></p>
+<p><code>D:\gopath</code>用于存放<code>go mod</code>下载的第三方依赖包<br><code>D:\GolandProjects</code> 用于存放项目</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 始终开启go modules</span></span><br><span class="line"><span class="keyword">go</span> env -w GO111MODULE=on</span><br><span class="line"><span class="comment">// 设置七牛云镜像</span></span><br><span class="line"><span class="keyword">go</span> env -w GOPROXY=https:<span class="comment">//goproxy.cn</span></span><br><span class="line"><span class="comment">// 设置gopath</span></span><br><span class="line"><span class="keyword">go</span> env -w GOPATH=D:\gopath</span><br></pre></td></tr></table></figure>
+
+<h3 id="将GOPATH添加至环境变量"><a href="#将GOPATH添加至环境变量" class="headerlink" title="将GOPATH添加至环境变量"></a>将<code>GOPATH</code>添加至环境变量</h3><p><img src="https://img-blog.csdnimg.cn/20201023144247610.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="GoLand中gopath的设置"><a href="#GoLand中gopath的设置" class="headerlink" title="GoLand中gopath的设置"></a>GoLand中gopath的设置</h3><p><img src="https://img-blog.csdnimg.cn/2020102414003285.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="项目构建工具，管理依赖-包"><a href="#项目构建工具，管理依赖-包" class="headerlink" title="项目构建工具，管理依赖/包"></a>项目构建工具，管理依赖/包</h2><p>使用<code>go mod</code>方式构建项目优点</p>
+<ol>
+<li>自动下载依赖包</li>
+<li>项目不必放在GOPATH/src内了</li>
+<li>项目内会生成一个go.mod文件，列出包依赖</li>
+<li>所有的第三方包会准确的指定版本号</li>
+<li>对于已经转移的包，可以用replace 申明替换，不需要改代码</li>
+</ol>
+<h3 id="在-go-mod中编辑"><a href="#在-go-mod中编辑" class="headerlink" title="在 go.mod中编辑"></a>在 <code>go.mod</code>中编辑</h3><p><img src="https://img-blog.csdnimg.cn/20200924151044223.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>go.mod可以写以下几个关键字：</p>
+<ul>
+<li>module<br>定义模组路径</li>
+<li>go<br>定义go语言version</li>
+<li>require<br>指定依赖的套件，预设是最新版，可以指定版本号</li>
+<li>exclude<br>排除该套件和其版本</li>
+<li>replace<br>使用不同的套件版本并替换原有的套件版本</li>
+<li>注解<br>// 单行注解<br>/* 多行注解*/<br>indirect 代表被间接导入的依赖包</li>
+</ul>
+<h3 id="命令行-go-get-地址"><a href="#命令行-go-get-地址" class="headerlink" title="命令行 go get 地址"></a>命令行 <code>go get</code> 地址</h3><p><img src="https://img-blog.csdnimg.cn/20200924151202425.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70#pic_center" alt="go get"><br>只要有开启<code>go modules</code>功能，<code>go get</code> 就不会像以前一样在<code>GOPATH/src</code>下放置套件档案，而是会放在<code>GOPATH/pkg/mod</code>里面，并且<code>go.mod</code>会写好引入，这样也就不用使用<code>go mod download</code>指令了。</p>
+<h1 id="Clion配置OpenCV开发环境"><a href="#Clion配置OpenCV开发环境" class="headerlink" title="Clion配置OpenCV开发环境"></a>Clion配置OpenCV开发环境</h1><p>VS开发实在笨重，Clion是一个很智能的C/C++的集成开发环境，本文介绍在Clion中配置OpenCV开发环境。</p>
+<h2 id="OpenCV"><a href="#OpenCV" class="headerlink" title="OpenCV"></a>OpenCV</h2><p>计算机视觉库</p>
+<p>官网：<a target="_blank" rel="noopener" href="https://opencv.org/">https://opencv.org/</a></p>
+<p>CMake官网：<a target="_blank" rel="noopener" href="https://cmake.org/">https://cmake.org/</a></p>
+<p>MinGW-64：<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/mingw-w64/files/">https://sourceforge.net/projects/mingw-w64/files/</a></p>
+<p>编译思路：使用cmake将源码编译成mingw版本，在使用mingw install到本地，最后在clion中在CMakeLists.txt配置</p>
+<h2 id="MinGW在Windows上编译的OpenCV的32位和64位版本"><a href="#MinGW在Windows上编译的OpenCV的32位和64位版本" class="headerlink" title="MinGW在Windows上编译的OpenCV的32位和64位版本"></a>MinGW在Windows上编译的OpenCV的32位和64位版本</h2><p>编译好的，直接在clion中使用即可</p>
+<p>OpenCV-MinGW-Build：<a target="_blank" rel="noopener" href="https://github.com/huihut/OpenCV-MinGW-Build">https://github.com/huihut/OpenCV-MinGW-Build</a></p>
+<h2 id="Clion配置"><a href="#Clion配置" class="headerlink" title="Clion配置"></a>Clion配置</h2><h3 id="下载OpenCV-MinGW-Build"><a href="#下载OpenCV-MinGW-Build" class="headerlink" title="下载OpenCV-MinGW-Build"></a>下载OpenCV-MinGW-Build</h3><p><img src="/images/image-20210115134542316.png" alt="image-20210115134542316"></p>
+<h3 id="添加至环境变脸"><a href="#添加至环境变脸" class="headerlink" title="添加至环境变脸"></a>添加至环境变脸</h3><p>在系统环境变量PATH中加上刚才解压的opencv的目录</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\Applications\OpenCV<span class="literal">-MinGW</span><span class="literal">-Build</span><span class="literal">-OpenCV</span><span class="literal">-4</span>.<span class="number">0.0</span><span class="literal">-rc</span><span class="literal">-x64</span>\x64\mingw\bin</span><br></pre></td></tr></table></figure>
+
+<h3 id="CMakeLists-txt"><a href="#CMakeLists-txt" class="headerlink" title="CMakeLists.txt"></a>CMakeLists.txt</h3><p>注意</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION <span class="number">3.15</span>)</span><br><span class="line"># 项目名称</span><br><span class="line">project(opencv_demo)</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span>(CMAKE_CXX_STANDARD <span class="number">14</span>)</span><br><span class="line"></span><br><span class="line">add_executable(untitled2 main.cpp)</span><br><span class="line"># OpenCV-MinGW-Build</span><br><span class="line"><span class="built_in">set</span>(OpenCV_DIR D:/Applications/OpenCV-MinGW-Build-OpenCV<span class="number">-4.0</span><span class="number">.0</span>-rc-x64)</span><br><span class="line">FIND_PACKAGE(OpenCV REQUIRED)</span><br><span class="line"># 项目名称</span><br><span class="line">TARGET_LINK_LIBRARIES(opencv_demo $&#123;OpenCV_LIBS&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试程序"><a href="#测试程序" class="headerlink" title="测试程序"></a>测试程序</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/highgui/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cv::Mat srcImage=cv::imread(<span class="string">&quot;D:\\CLionProjects\\untitled2\\1.png&quot;</span>);</span><br><span class="line">    imshow(<span class="string">&quot;源图像&quot;</span>,srcImage);</span><br><span class="line">    cv::waitKey(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装MySQL-5-7-29"><a href="#安装MySQL-5-7-29" class="headerlink" title="安装MySQL-5.7.29"></a>安装MySQL-5.7.29</h1><p>在Windows环境下安装MySQL5.7.29免安装版</p>
+<h2 id="下载MySQL5-7-29，解压"><a href="#下载MySQL5-7-29，解压" class="headerlink" title="下载MySQL5.7.29，解压"></a>下载MySQL5.7.29，解压</h2><p>MySQL5.7下载地址：<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/5.7.html">https://dev.mysql.com/downloads/mysql/5.7.html</a></p>
+<p><img src="/images/Snipaste_2021-03-08_13-56-47.png" alt="在这里插入图片描述"></p>
+<h2 id="添加环境变量"><a href="#添加环境变量" class="headerlink" title="添加环境变量"></a>添加环境变量</h2><h2 id="在MySQL根目录下新建-my-ini-文件并编辑"><a href="#在MySQL根目录下新建-my-ini-文件并编辑" class="headerlink" title="在MySQL根目录下新建 my.ini 文件并编辑"></a>在MySQL根目录下新建 my.ini 文件并编辑</h2><p><img src="/images/Snipaste_2021-03-08_13-56-56.png" alt="在这里插入图片描述"></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[Client]</span><br><span class="line"><span class="comment">#设置3306端口</span></span><br><span class="line">port = 3306</span><br><span class="line">[mysqld]</span><br><span class="line"><span class="comment">#设置3306端口</span></span><br><span class="line">port = 3306</span><br><span class="line"><span class="comment"># 设置mysql的安装目录</span></span><br><span class="line">basedir=D:\Applications\mysql-5.7.29-winx64\</span><br><span class="line"><span class="comment"># 设置mysql数据库的数据的存放目录</span></span><br><span class="line">datadir=D:\Applications\mysql-5.7.29-winx64\data</span><br><span class="line"><span class="comment"># 允许最大连接数</span></span><br><span class="line">max_connections=200</span><br><span class="line"><span class="comment"># 服务端使用的字符集默认为8比特编码的latin1字符集</span></span><br><span class="line">character-<span class="keyword">set</span>-<span class="keyword">server</span>=utf8mb4</span><br><span class="line"><span class="comment"># 创建新表时将使用的默认存储引擎</span></span><br><span class="line"><span class="keyword">default</span>-<span class="keyword">storage</span>-<span class="keyword">engine</span>=<span class="keyword">INNODB</span></span><br><span class="line">sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</span><br><span class="line"><span class="comment">#设置时区</span></span><br><span class="line"><span class="keyword">default</span>-<span class="built_in">time</span>-zone = <span class="string">&#x27;+8:00&#x27;</span></span><br><span class="line">[mysql]</span><br><span class="line"><span class="comment"># 设置mysql客户端默认字符集</span></span><br><span class="line"><span class="keyword">default</span>-<span class="built_in">character</span>-<span class="keyword">set</span>=utf8mb4</span><br></pre></td></tr></table></figure>
+
+<h2 id="初始化数据文件"><a href="#初始化数据文件" class="headerlink" title="初始化数据文件"></a>初始化数据文件</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld <span class="comment">--initialize-insecure --user=mysql;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用管理员权限启动CMD，然后输入"><a href="#使用管理员权限启动CMD，然后输入" class="headerlink" title="使用管理员权限启动CMD，然后输入"></a>使用管理员权限启动CMD，然后输入</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld –<span class="keyword">install</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="启动MySQL服务"><a href="#启动MySQL服务" class="headerlink" title="启动MySQL服务"></a>启动MySQL服务</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net <span class="keyword">start</span> mysql</span><br></pre></td></tr></table></figure>
+
+<h2 id="命令行登录MySQL"><a href="#命令行登录MySQL" class="headerlink" title="命令行登录MySQL"></a>命令行登录MySQL</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br></pre></td></tr></table></figure>
+
+<h2 id="进入界面后更改root密码（123456为我的新密码-，此处密码由您决定）"><a href="#进入界面后更改root密码（123456为我的新密码-，此处密码由您决定）" class="headerlink" title="进入界面后更改root密码（123456为我的新密码 ，此处密码由您决定）"></a>进入界面后更改root密码（123456为我的新密码 ，此处密码由您决定）</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> mysql.user <span class="keyword">set</span> authentication_string=<span class="keyword">password</span>(<span class="string">&#x27;123456&#x27;</span>) <span class="keyword">where</span> <span class="keyword">user</span>=<span class="string">&#x27;root&#x27;</span> <span class="keyword">and</span> Host = <span class="string">&#x27;localhost&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="刷新权限"><a href="#刷新权限" class="headerlink" title="刷新权限"></a>刷新权限</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="重启mysql即可正常使用"><a href="#重启mysql即可正常使用" class="headerlink" title="重启mysql即可正常使用"></a>重启mysql即可正常使用</h2><h3 id="使用命令行重启"><a href="#使用命令行重启" class="headerlink" title="使用命令行重启"></a>使用命令行重启</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 启动mysql服务</span><br><span class="line">net <span class="keyword">start</span> mysql</span><br><span class="line">// 停止mysql</span><br><span class="line">net <span class="keyword">stop</span> mysql</span><br></pre></td></tr></table></figure>
+
+<h3 id="手动重启"><a href="#手动重启" class="headerlink" title="手动重启"></a>手动重启</h3><p><img src="/images/Snipaste_2021-03-08_13-57-05.png" alt="在这里插入图片描述"></p>
+<h1 id="配置pip-Python开发环境"><a href="#配置pip-Python开发环境" class="headerlink" title="配置pip Python开发环境"></a>配置pip Python开发环境</h1><p>Windows下安装Python后会自带pip，pip是Python的默认包管理工具，本文基于Python3.7.9，介绍pip设置国内镜像，并设置默认包安装位置。</p>
+<h2 id="修改国内镜像源"><a href="#修改国内镜像源" class="headerlink" title="修改国内镜像源"></a>修改国内镜像源</h2><h3 id="常见pip国内镜像"><a href="#常见pip国内镜像" class="headerlink" title="常见pip国内镜像"></a>常见pip国内镜像</h3><p>使用pip安装某些库可能速度较慢，可以考虑使用国内镜像</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http://mirrors.aliyun.com/pypi/simple/ // 阿里云</span><br><span class="line">https://pypi.mirrors.ustc.edu.cn/simple/ // 中国科技大学</span><br><span class="line">http://pypi.douban.com/simple/ // 豆瓣(douban)</span><br><span class="line">https://pypi.tuna.tsinghua.edu.cn/simple/ // 清华大学</span><br></pre></td></tr></table></figure>
+
+<h3 id="临时使用"><a href="#临时使用" class="headerlink" title="临时使用"></a>临时使用</h3><p>可以在使用pip的时候在后面加上<code>-i</code>参数，指定pip源</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install xxx -i https://pypi.mirrors.ustc.edu.cn/simple/</span><br></pre></td></tr></table></figure>
+
+<h3 id="永久修改"><a href="#永久修改" class="headerlink" title="永久修改"></a>永久修改</h3><ol>
+<li>Linux</li>
+</ol>
+<p>修改 <code>~/.pip/pip.conf</code> (没有就创建一个)， 内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = http://mirrors.aliyun.com/pypi/simple/</span><br><span class="line">[install]</span><br><span class="line">trusted-host = mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Windows</li>
+</ol>
+<p>直接在user目录中创建一个pip目录，如：<code>C:\Users\xxx\pip</code>，新建文件pip.ini，内容如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = http://mirrors.aliyun.com/pypi/simple/</span><br><span class="line">[install]</span><br><span class="line">trusted-host = mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改pip默认包安装位置"><a href="#修改pip默认包安装位置" class="headerlink" title="修改pip默认包安装位置"></a>修改pip默认包安装位置</h2><p>本机python安装位置为<code>D:\Applications\Python</code></p>
+<p><img src="/images/image-20210204154101386.png" alt="image-20210204154101386"></p>
+<p>python目录/文件的具体用途：</p>
+<ul>
+<li><strong>DLLs：</strong> Python 自己使用的动态库</li>
+<li><strong>Doc：</strong> 自带的 Python 使用说明文档（如果上面安装时不选择，应该会没有，这个没具体试过）</li>
+<li><strong>include：</strong> 包含共享目录</li>
+<li><strong>Lib：</strong> 库文件，放自定义模块和包</li>
+<li><strong>libs：</strong> 编译生成的Python 自己使用的静态库</li>
+<li><strong>Scripts：</strong> 各种包/模块对应的可执行程序。安装时如果选择了pip。那么pip的可执行程序就在此！</li>
+<li><strong>tcl：</strong> 桌面编程包</li>
+</ul>
+<p>pip包默认安装位置是<code>C:\Users\xxx\AppData\Roaming\Python\Python37\Lib\site-packages</code></p>
+<p>命令行输入：<code>python -m site -help</code></p>
+<p><img src="/images/image-20210204154423648.png" alt="image-20210204154423648"></p>
+<p>修改<code>D:\Applications\Python\Python37\Lib\site.py</code></p>
+<p><img src="/images/image-20210204154606612.png" alt="image-20210204154606612"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">USER_SITE = &#x27;D:\Applications\Python\Python37\Lib\site-packages&#x27;</span><br><span class="line">USER_BASE = &#x27;D:\Applications\Python\Python37\Scripts&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="升级pip"><a href="#升级pip" class="headerlink" title="升级pip"></a>升级pip</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m pip install --upgrade pip</span><br></pre></td></tr></table></figure>
+
+<h1 id="配置并运行-集群Zookeeper"><a href="#配置并运行-集群Zookeeper" class="headerlink" title="配置并运行 集群Zookeeper"></a>配置并运行 集群Zookeeper</h1><p>ZooKeeper是一个分布式的，开放源码的分布式应用程序协调服务，是Google的Chubby一个开源的实现，是Hadoop和Hbase的重要组件。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、域名服务、分布式同步、组服务等。</p>
+<h2 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h2><p>从Oracle的Java网站下载</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase-downloads.html">https://www.oracle.com/java/technologies/javase-downloads.html</a></p>
+</blockquote>
+<h2 id="zookeeper下载地址"><a href="#zookeeper下载地址" class="headerlink" title="zookeeper下载地址"></a>zookeeper下载地址</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//archive.apache.org/dist/zookeeper/zookeeper-3.4.14/</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="解压文件目录"><a href="#解压文件目录" class="headerlink" title="解压文件目录"></a>解压文件目录</h2><p><img src="https://img-blog.csdnimg.cn/20201206172813488.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>修改\conf下的：<code>zoo_sample.cfg</code>文件名，改为：<code>zoo.cfg</code></p>
+<p>默认配置：<br><img src="https://img-blog.csdnimg.cn/20201206173044512.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ol>
+<li>tickTime：这个时间是作为 Zookeeper 服务器之间或客户端与服务器之间维持心跳的时间间隔，也就是每个 tickTime 时间就会发送一个心跳。</li>
+<li>dataDir：顾名思义就是 Zookeeper 保存数据的目录，默认情况下，Zookeeper 将写数据的日志文件也保存在这个目录里。</li>
+<li>dataLogDir：顾名思义就是 Zookeeper 保存日志文件的目录</li>
+<li>clientPort：这个端口就是客户端连接 Zookeeper 服务器的端口，Zookeeper 会监听这个端口，接受客户端的访问请求。</li>
+</ol>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>Zookeeper 的启动脚本在 <code>bin</code> 目录下，Windows 下的启动脚本是 <code>zkServer.cmd</code><br><img src="https://img-blog.csdnimg.cn/20201206174214207.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h2><p>增加几个配置项。集群模式除了上面的三个配置项还要增加下面几个配置项：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">initLimit=<span class="number">5</span> </span><br><span class="line">syncLimit=<span class="number">2</span> </span><br><span class="line">server<span class="number">.1</span>=<span class="number">192.168</span><span class="number">.211</span><span class="number">.1</span>:<span class="number">2888</span>:<span class="number">3888</span> </span><br><span class="line">server<span class="number">.2</span>=<span class="number">192.168</span><span class="number">.211</span><span class="number">.2</span>:<span class="number">2888</span>:<span class="number">3888</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>initLimit：这个配置项是用来配置 Zookeeper 接受客户端（这里所说的客户端不是用户连接 Zookeeper 服务器的客户端，而是 Zookeeper 服务器集群中连接到 Leader 的 Follower 服务器）初始化连接时最长能忍受多少个心跳时间间隔数。当已经超过 10 个心跳的时间（也就是 tickTime）长度后 Zookeeper 服务器还没有收到客户端的返回信息，那么表明这个客户端连接失败。总的时间长度就是 5*2000=10 秒</li>
+<li>syncLimit：这个配置项标识 Leader 与 Follower 之间发送消息，请求和应答时间长度，最长不能超过多少个 tickTime 的时间长度，总的时间长度就是 2*2000=4 秒</li>
+<li>server.A=B：C：D：其中 A 是一个数字，表示这个是第几号服务器；B 是这个服务器的 ip 地址；C 表示的是这个服务器与集群中的 Leader 服务器交换信息的端口；D 表示的是万一集群中的 Leader 服务器挂了，需要一个端口来重新进行选举，选出一个新的 Leader，而这个端口就是用来执行选举时服务器相互通信的端口。如果是伪集群的配置方式，由于 B 都是一样，所以不同的 Zookeeper 实例通信端口号不能一样，所以要给它们分配不同的端口号。</li>
+<li>除了修改 zoo.cfg 配置文件，集群模式下还要配置一个文件 myid，这个文件在 dataDir 目录下，这个文件里面就有一个数据就是 A 的值，Zookeeper 启动时会读取这个文件，拿到里面的数据与 zoo.cfg 里面的配置信息比较从而判断到底是那个 server。</li>
+</ol>
+<h1 id="设置Maven国内镜像"><a href="#设置Maven国内镜像" class="headerlink" title="设置Maven国内镜像"></a>设置Maven国内镜像</h1><h2 id="方案1：针对所有项目修改中央仓库"><a href="#方案1：针对所有项目修改中央仓库" class="headerlink" title="方案1：针对所有项目修改中央仓库"></a>方案1：针对所有项目修改中央仓库</h2><p>右键项目选中maven选项，然后选择“open settings.xml”或者 “create settings.xml”，在 settings.xml 下找到 <mirrors> 节点，并在节点下增加镜像配置，重启IDE</p>
+<!--more-->
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;mirrors&gt;</span><br><span class="line">        &lt;mirror&gt;</span><br><span class="line">            &lt;id&gt;alimaven&lt;/id&gt;</span><br><span class="line">            &lt;name&gt;aliyun maven&lt;/name&gt;</span><br><span class="line">            &lt;url&gt;http:<span class="comment">//maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</span></span><br><span class="line">            &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;</span><br><span class="line">        &lt;/mirror&gt;</span><br><span class="line">&lt;/mirrors&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>id：唯一标识一个镜像</li>
+<li>name：镜像名称</li>
+<li>url：镜像地址</li>
+<li>mirrorOf：代表一个镜像的替代位置，例如central就表示代替官方的中央仓库</li>
+</ul>
+<h2 id="方案2：分别给每个项目配置不同的中央仓库"><a href="#方案2：分别给每个项目配置不同的中央仓库" class="headerlink" title="方案2：分别给每个项目配置不同的中央仓库"></a>方案2：分别给每个项目配置不同的中央仓库</h2><p><strong>Maven 可以针对每个项目配置不同的中央仓库，在项目 pom.xml <repositories> 节点下增加如下配置</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;repository&gt;</span><br><span class="line">    &lt;id&gt;alimaven&lt;/id&gt;</span><br><span class="line">    &lt;name&gt;aliyun maven&lt;/name&gt;</span><br><span class="line">    &lt;url&gt;https:<span class="comment">//maven.aliyun.com/repository/public&lt;/url&gt;</span></span><br><span class="line">&lt;/repository&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置Maven本地仓库位置"><a href="#设置Maven本地仓库位置" class="headerlink" title="设置Maven本地仓库位置"></a>设置Maven本地仓库位置</h2><p>在<code>settings.xml</code>节点下新建一下节点<code>localRepository</code><br>idea的Maven本地仓库是在用户文件夹下的<code>.m2</code>文件夹下，为了防止本地仓库太大，将仓库地址存放在项目同一磁盘下的<code>/workmaven/localRepository</code>文件夹内。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;localRepository&gt;/workmaven/localRepository&lt;/localRepository&gt;</span><br></pre></td></tr></table></figure>
+<p>参考：<a target="_blank" rel="noopener" href="https://maven.aliyun.com/mvn/guide">阿里云云效 Maven</a></p>
+<h1 id="设置Gradle国内镜像"><a href="#设置Gradle国内镜像" class="headerlink" title="设置Gradle国内镜像"></a>设置Gradle国内镜像</h1><h2 id="配置本地仓库地址"><a href="#配置本地仓库地址" class="headerlink" title="配置本地仓库地址"></a>配置本地仓库地址</h2><p>gradle默认存放jar路径:<code>C:\Users\Administrator\.gradle\caches\</code></p>
+<p>在环境变量中添加名为 <code>GRADLE_USER_HOME</code>，值为本地仓库位置的环境变量即可</p>
+<h2 id="对所有项目生效"><a href="#对所有项目生效" class="headerlink" title="对所有项目生效"></a>对所有项目生效</h2><p>在<code>$&#123;USER_HOME&#125;/.gradle/</code>或者<code>$&#123;GRADLE_USER_HOME&#125;</code>下创建<code>init.gradle</code>文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;</span><br><span class="line">  repositories &#123;</span><br><span class="line">    maven &#123;</span><br><span class="line">      url <span class="string">&#x27;https://maven.aliyun.com/repository/public/&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    mavenLocal()</span><br><span class="line">    mavenCentral()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置M2-HOME"><a href="#配置M2-HOME" class="headerlink" title="配置M2_HOME"></a>配置M2_HOME</h2><p><code>mavenLocal()</code>时Gradle默认会按以下顺序去查找本地的maven仓库：<code>$&#123;USER_HOME&#125;/.m2/settings.xml</code> &gt; <code>$&#123;M2_HOME&#125;/conf/settings.xml</code> &gt; <code>$&#123;USER_HOME&#125;/.m2/repository</code></p>
+<h1 id="Miniconda安装"><a href="#Miniconda安装" class="headerlink" title="Miniconda安装"></a>Miniconda安装</h1><h2 id="Conda、Anaconda、Miniconda的区别"><a href="#Conda、Anaconda、Miniconda的区别" class="headerlink" title="Conda、Anaconda、Miniconda的区别"></a>Conda、Anaconda、Miniconda的区别</h2><p>Conda是一个包管理器;Anaconda是一个发行包<br>Conda可以理解为一个工具，也是一个可执行命令，其核心功能是包管理与环境管理。包管理与pip的使用类似，环境管理则允许用户方便地安装不同版本的Python并可以快速切换。<br>Anaconda是一个打包的集合器皿，里面预装好了Conda、某个版本的Python、众多packages、科学计算工具等等，所以也称为Python的一种发行版。也可以理解：Conda是包的管理，可以安装包（conda install samtools），删除环境（），查找等用法。<br>Miniconda，顾名思义，它只包含最基本的内容——Python与Conda，以及相关的必须依赖项，对于空间要求严格的用户，Miniconda是一种选择。</p>
+<h2 id="Miniconda下载"><a href="#Miniconda下载" class="headerlink" title="Miniconda下载"></a>Miniconda下载</h2><p>官方：<a target="_blank" rel="noopener" href="https://repo.anaconda.com/miniconda/">https://repo.anaconda.com/miniconda/</a><br>国内镜像：<a target="_blank" rel="noopener" href="https://repo.anaconda.com/miniconda/">https://repo.anaconda.com/miniconda/</a><br>API：<a target="_blank" rel="noopener" href="https://conda.io/projects/conda/en/latest/index.html">https://conda.io/projects/conda/en/latest/index.html</a></p>
+<h2 id="conda常用命令"><a href="#conda常用命令" class="headerlink" title="conda常用命令"></a>conda常用命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看环境名</span></span><br><span class="line">conda info --envs 或conda info -e</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看已安装软件列表</span></span><br><span class="line">conda list</span><br><span class="line"><span class="meta">#</span><span class="bash"> 退出环境</span></span><br><span class="line">source deactivate</span><br><span class="line"><span class="meta">#</span><span class="bash"> 更新 (conda将python等软件都视为package)</span> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 假设当前环境是python 3.4, conda会将python升级为3.4.x系列的当前最新版本</span></span><br><span class="line">conda update python </span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除全部packages</span></span><br><span class="line">conda remove --name/-n wes --all</span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除某个packages</span></span><br><span class="line">source activate wes</span><br><span class="line">conda remove multiqc</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或直接指明name</span></span><br><span class="line">conda remove -n wes numpy</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Jonsson Yan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jonssonyan.com/2021/04/13/Windows%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" title="Windows系统配置开发环境">https://jonssonyan.com/2021/04/13/Windows系统配置开发环境/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-ND</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Go/" rel="tag"># Go</a>
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/PhpStorm/" rel="tag"># PhpStorm</a>
+              <a href="/tags/PHP/" rel="tag"># PHP</a>
+              <a href="/tags/GoLand/" rel="tag"># GoLand</a>
+              <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
+              <a href="/tags/C-C/" rel="tag"># C/C++</a>
+              <a href="/tags/pip/" rel="tag"># pip</a>
+              <a href="/tags/Zookeeper/" rel="tag"># Zookeeper</a>
+              <a href="/tags/Maven/" rel="tag"># Maven</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/11/Spring-Cloud-Alibaba-Nacos%E8%AE%B0%E5%BD%95/" rel="prev" title="Spring Cloud Alibaba Nacos记录">
+      <i class="fa fa-chevron-left"></i> Spring Cloud Alibaba Nacos记录
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/13/MySQL%E8%AE%B0%E5%BD%95/" rel="next" title="MySQL记录">
+      MySQL记录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PhpStorm%E9%85%8D%E7%BD%AEPHP%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">PhpStorm配置PHP开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDphp"><span class="nav-number">1.1.</span> <span class="nav-text">下载php</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDphpstorm"><span class="nav-number">1.2.</span> <span class="nav-text">下载phpstorm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xdebug"><span class="nav-number">1.3.</span> <span class="nav-text">xdebug</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.1.</span> <span class="nav-text">配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx"><span class="nav-number">1.4.</span> <span class="nav-text">Nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Composer"><span class="nav-number">1.5.</span> <span class="nav-text">Composer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.5.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mac-%E6%88%96-Linux-%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.5.2.</span> <span class="nav-text">Mac 或 Linux 系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.5.3.</span> <span class="nav-text">Windows 系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E8%83%BD%E5%87%BA%E7%8E%B0%E7%9A%84%E6%8A%A5%E9%94%99"><span class="nav-number">1.5.4.</span> <span class="nav-text">可能出现的报错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F"><span class="nav-number">1.5.5.</span> <span class="nav-text">设置国内镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.5.1.</span> <span class="nav-text">全局配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.5.2.</span> <span class="nav-text">局部配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%96%E6%B6%88%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.5.3.</span> <span class="nav-text">取消配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9composer%E7%BC%93%E5%AD%98%E8%B7%AF%E5%BE%84"><span class="nav-number">1.5.6.</span> <span class="nav-text">修改composer缓存路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.7.</span> <span class="nav-text">常用命令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GoLand%E9%85%8D%E7%BD%AEGo%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">GoLand配置Go开发环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Golang%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">Golang安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GoLand-IDE%E5%AE%89%E8%A3%85"><span class="nav-number">2.2.</span> <span class="nav-text">GoLand IDE安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-%E4%BE%9D%E8%B5%96-%E5%8C%85-%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F"><span class="nav-number">2.3.</span> <span class="nav-text">设置 依赖&#x2F;包 国内镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9GOPATH%E8%B7%AF%E5%BE%84"><span class="nav-number">2.3.1.</span> <span class="nav-text">修改GOPATH路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86GOPATH%E6%B7%BB%E5%8A%A0%E8%87%B3%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">2.3.2.</span> <span class="nav-text">将GOPATH添加至环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GoLand%E4%B8%ADgopath%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.3.3.</span> <span class="nav-text">GoLand中gopath的设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%EF%BC%8C%E7%AE%A1%E7%90%86%E4%BE%9D%E8%B5%96-%E5%8C%85"><span class="nav-number">2.4.</span> <span class="nav-text">项目构建工具，管理依赖&#x2F;包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-go-mod%E4%B8%AD%E7%BC%96%E8%BE%91"><span class="nav-number">2.4.1.</span> <span class="nav-text">在 go.mod中编辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C-go-get-%E5%9C%B0%E5%9D%80"><span class="nav-number">2.4.2.</span> <span class="nav-text">命令行 go get 地址</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Clion%E9%85%8D%E7%BD%AEOpenCV%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">3.</span> <span class="nav-text">Clion配置OpenCV开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenCV"><span class="nav-number">3.1.</span> <span class="nav-text">OpenCV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MinGW%E5%9C%A8Windows%E4%B8%8A%E7%BC%96%E8%AF%91%E7%9A%84OpenCV%E7%9A%8432%E4%BD%8D%E5%92%8C64%E4%BD%8D%E7%89%88%E6%9C%AC"><span class="nav-number">3.2.</span> <span class="nav-text">MinGW在Windows上编译的OpenCV的32位和64位版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Clion%E9%85%8D%E7%BD%AE"><span class="nav-number">3.3.</span> <span class="nav-text">Clion配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDOpenCV-MinGW-Build"><span class="nav-number">3.3.1.</span> <span class="nav-text">下载OpenCV-MinGW-Build</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%87%B3%E7%8E%AF%E5%A2%83%E5%8F%98%E8%84%B8"><span class="nav-number">3.3.2.</span> <span class="nav-text">添加至环境变脸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CMakeLists-txt"><span class="nav-number">3.3.3.</span> <span class="nav-text">CMakeLists.txt</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%A8%8B%E5%BA%8F"><span class="nav-number">3.4.</span> <span class="nav-text">测试程序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85MySQL-5-7-29"><span class="nav-number">4.</span> <span class="nav-text">安装MySQL-5.7.29</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDMySQL5-7-29%EF%BC%8C%E8%A7%A3%E5%8E%8B"><span class="nav-number">4.1.</span> <span class="nav-text">下载MySQL5.7.29，解压</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">4.2.</span> <span class="nav-text">添加环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8MySQL%E6%A0%B9%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%96%B0%E5%BB%BA-my-ini-%E6%96%87%E4%BB%B6%E5%B9%B6%E7%BC%96%E8%BE%91"><span class="nav-number">4.3.</span> <span class="nav-text">在MySQL根目录下新建 my.ini 文件并编辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6"><span class="nav-number">4.4.</span> <span class="nav-text">初始化数据文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%AE%A1%E7%90%86%E5%91%98%E6%9D%83%E9%99%90%E5%90%AF%E5%8A%A8CMD%EF%BC%8C%E7%84%B6%E5%90%8E%E8%BE%93%E5%85%A5"><span class="nav-number">4.5.</span> <span class="nav-text">使用管理员权限启动CMD，然后输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8MySQL%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.6.</span> <span class="nav-text">启动MySQL服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%99%BB%E5%BD%95MySQL"><span class="nav-number">4.7.</span> <span class="nav-text">命令行登录MySQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5%E7%95%8C%E9%9D%A2%E5%90%8E%E6%9B%B4%E6%94%B9root%E5%AF%86%E7%A0%81%EF%BC%88123456%E4%B8%BA%E6%88%91%E7%9A%84%E6%96%B0%E5%AF%86%E7%A0%81-%EF%BC%8C%E6%AD%A4%E5%A4%84%E5%AF%86%E7%A0%81%E7%94%B1%E6%82%A8%E5%86%B3%E5%AE%9A%EF%BC%89"><span class="nav-number">4.8.</span> <span class="nav-text">进入界面后更改root密码（123456为我的新密码 ，此处密码由您决定）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%B7%E6%96%B0%E6%9D%83%E9%99%90"><span class="nav-number">4.9.</span> <span class="nav-text">刷新权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%90%AFmysql%E5%8D%B3%E5%8F%AF%E6%AD%A3%E5%B8%B8%E4%BD%BF%E7%94%A8"><span class="nav-number">4.10.</span> <span class="nav-text">重启mysql即可正常使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%87%8D%E5%90%AF"><span class="nav-number">4.10.1.</span> <span class="nav-text">使用命令行重启</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E9%87%8D%E5%90%AF"><span class="nav-number">4.10.2.</span> <span class="nav-text">手动重启</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEpip-Python%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">5.</span> <span class="nav-text">配置pip Python开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">5.1.</span> <span class="nav-text">修改国内镜像源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81pip%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F"><span class="nav-number">5.1.1.</span> <span class="nav-text">常见pip国内镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B4%E6%97%B6%E4%BD%BF%E7%94%A8"><span class="nav-number">5.1.2.</span> <span class="nav-text">临时使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B0%B8%E4%B9%85%E4%BF%AE%E6%94%B9"><span class="nav-number">5.1.3.</span> <span class="nav-text">永久修改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9pip%E9%BB%98%E8%AE%A4%E5%8C%85%E5%AE%89%E8%A3%85%E4%BD%8D%E7%BD%AE"><span class="nav-number">5.2.</span> <span class="nav-text">修改pip默认包安装位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%87%E7%BA%A7pip"><span class="nav-number">5.3.</span> <span class="nav-text">升级pip</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%B9%B6%E8%BF%90%E8%A1%8C-%E9%9B%86%E7%BE%A4Zookeeper"><span class="nav-number">6.</span> <span class="nav-text">配置并运行 集群Zookeeper</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85JDK"><span class="nav-number">6.1.</span> <span class="nav-text">安装JDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zookeeper%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80"><span class="nav-number">6.2.</span> <span class="nav-text">zookeeper下载地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8B%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="nav-number">6.3.</span> <span class="nav-text">解压文件目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">6.4.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-number">6.5.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4"><span class="nav-number">6.6.</span> <span class="nav-text">集群</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEMaven%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F"><span class="nav-number">7.</span> <span class="nav-text">设置Maven国内镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%881%EF%BC%9A%E9%92%88%E5%AF%B9%E6%89%80%E6%9C%89%E9%A1%B9%E7%9B%AE%E4%BF%AE%E6%94%B9%E4%B8%AD%E5%A4%AE%E4%BB%93%E5%BA%93"><span class="nav-number">7.1.</span> <span class="nav-text">方案1：针对所有项目修改中央仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%882%EF%BC%9A%E5%88%86%E5%88%AB%E7%BB%99%E6%AF%8F%E4%B8%AA%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE%E4%B8%8D%E5%90%8C%E7%9A%84%E4%B8%AD%E5%A4%AE%E4%BB%93%E5%BA%93"><span class="nav-number">7.2.</span> <span class="nav-text">方案2：分别给每个项目配置不同的中央仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEMaven%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E4%BD%8D%E7%BD%AE"><span class="nav-number">7.3.</span> <span class="nav-text">设置Maven本地仓库位置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEGradle%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F"><span class="nav-number">8.</span> <span class="nav-text">设置Gradle国内镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E5%9C%B0%E5%9D%80"><span class="nav-number">8.1.</span> <span class="nav-text">配置本地仓库地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%89%80%E6%9C%89%E9%A1%B9%E7%9B%AE%E7%94%9F%E6%95%88"><span class="nav-number">8.2.</span> <span class="nav-text">对所有项目生效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEM2-HOME"><span class="nav-number">8.3.</span> <span class="nav-text">配置M2_HOME</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Miniconda%E5%AE%89%E8%A3%85"><span class="nav-number">9.</span> <span class="nav-text">Miniconda安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Conda%E3%80%81Anaconda%E3%80%81Miniconda%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">9.1.</span> <span class="nav-text">Conda、Anaconda、Miniconda的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Miniconda%E4%B8%8B%E8%BD%BD"><span class="nav-number">9.2.</span> <span class="nav-text">Miniconda下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conda%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">9.3.</span> <span class="nav-text">conda常用命令</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jonsson Yan"
+      src="/images/tx.jpg">
+  <p class="site-author-name" itemprop="name">Jonsson Yan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jonssonyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jonssonyan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/jonssonyan" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;jonssonyan" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-nd.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jonsson Yan</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
