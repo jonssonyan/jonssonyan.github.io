@@ -2974,7 +2974,7 @@
   </entry>
   <entry>
     <title>看完此文，妈妈还会担心你Docker入不了门？</title>
-    <url>/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0Docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8%EF%BC%9F/</url>
+    <url>/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0Docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8/</url>
     <content><![CDATA[<p>Docker 是一个开源的应用容器引擎，基于 Go 语言。Docker可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。</p>
 <span id="more"></span>
 
