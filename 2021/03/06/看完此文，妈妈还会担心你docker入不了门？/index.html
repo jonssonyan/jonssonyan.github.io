@@ -22,20 +22,20 @@
 
   <meta name="description" content="Docker 是一个开源的应用容器引擎，基于 Go 语言。Docker可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="看完此文，妈妈还会担心你docker入不了门？">
-<meta property="og:url" content="https://jonssonyan.com/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8%EF%BC%9F/index.html">
+<meta property="og:title" content="看完此文，妈妈还会担心你Docker入不了门？">
+<meta property="og:url" content="https://jonssonyan.com/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0Docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8%EF%BC%9F/index.html">
 <meta property="og:site_name" content="阿壮Jonsson">
 <meta property="og:description" content="Docker 是一个开源的应用容器引擎，基于 Go 语言。Docker可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jonssonyan.com/images/20200815233403201.png#pic_center">
 <meta property="article:published_time" content="2021-03-06T13:24:09.000Z">
-<meta property="article:modified_time" content="2021-06-09T16:52:40.337Z">
+<meta property="article:modified_time" content="2021-06-09T16:56:40.443Z">
 <meta property="article:author" content="Jonsson Yan">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://jonssonyan.com/images/20200815233403201.png#pic_center">
 
-<link rel="canonical" href="https://jonssonyan.com/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8%EF%BC%9F/">
+<link rel="canonical" href="https://jonssonyan.com/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0Docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8%EF%BC%9F/">
 
 
 <script id="page-configurations">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>看完此文，妈妈还会担心你docker入不了门？ | 阿壮Jonsson</title>
+  <title>看完此文，妈妈还会担心你Docker入不了门？ | 阿壮Jonsson</title>
   
 
 
@@ -197,7 +197,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jonssonyan.com/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8%EF%BC%9F/">
+    <link itemprop="mainEntityOfPage" href="https://jonssonyan.com/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0Docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/tx.jpg">
@@ -210,7 +210,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          看完此文，妈妈还会担心你docker入不了门？
+          看完此文，妈妈还会担心你Docker入不了门？
         </h1>
 
         <div class="post-meta">
@@ -227,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-10 00:52:40" itemprop="dateModified" datetime="2021-06-10T00:52:40+08:00">2021-06-10</time>
+                <time title="修改时间：2021-06-10 00:56:40" itemprop="dateModified" datetime="2021-06-10T00:56:40+08:00">2021-06-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -255,8 +255,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8%EF%BC%9F/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8%EF%BC%9F/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0Docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8%EF%BC%9F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0Docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8%EF%BC%9F/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -398,7 +398,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://jonssonyan.com/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8%EF%BC%9F/" title="看完此文，妈妈还会担心你docker入不了门？">https://jonssonyan.com/2021/03/06/看完此文，妈妈还会担心你docker入不了门？/</a>
+    <a href="https://jonssonyan.com/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0Docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8%EF%BC%9F/" title="看完此文，妈妈还会担心你Docker入不了门？">https://jonssonyan.com/2021/03/06/看完此文，妈妈还会担心你Docker入不了门？/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-ND</a> 许可协议。转载请注明出处！
