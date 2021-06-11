@@ -27,15 +27,15 @@
 <meta property="og:site_name" content="阿壮Jonsson">
 <meta property="og:description" content="easypoi功能如同名字easy,主打的功能就是容易,让一个没见接触过poi的人员 就可以方便的写出Excel导出,Excel模板导出,Excel导入,Word模板导出,通过简单的注解和模板 语言(熟悉的表达式语法),完成以前复杂的写法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jonssonyan.com/images/image-20210310231703378.png">
-<meta property="og:image" content="https://jonssonyan.com/images/image-20210310231835383.png">
+<meta property="og:image" content="https://files.mdnice.com/user/10819/b043fd7a-18ee-4a8c-99df-bd42a33c3ce3.png">
+<meta property="og:image" content="https://files.mdnice.com/user/10819/0d3c5efd-0993-4b28-83c1-3f4a3dc4c9e9.png">
 <meta property="article:published_time" content="2021-03-10T15:01:59.000Z">
-<meta property="article:modified_time" content="2021-05-21T13:48:52.680Z">
+<meta property="article:modified_time" content="2021-06-11T16:48:19.100Z">
 <meta property="article:author" content="Jonsson Yan">
 <meta property="article:tag" content="Spring Boot">
 <meta property="article:tag" content="EasyPoi">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jonssonyan.com/images/image-20210310231703378.png">
+<meta name="twitter:image" content="https://files.mdnice.com/user/10819/b043fd7a-18ee-4a8c-99df-bd42a33c3ce3.png">
 
 <link rel="canonical" href="https://jonssonyan.com/2021/03/10/Spring-Boot%E6%95%B4%E5%90%88EasyPoi/">
 
@@ -229,7 +229,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-21 21:48:52" itemprop="dateModified" datetime="2021-05-21T21:48:52+08:00">2021-05-21</time>
+                <time title="修改时间：2021-06-12 00:48:19" itemprop="dateModified" datetime="2021-06-12T00:48:19+08:00">2021-06-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,17 +237,17 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring-Boot/" itemprop="url" rel="index"><span itemprop="name">Spring Boot</span></a>
+                  <a href="/categories/%E5%B9%B2%E8%B4%A7%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">干货系列</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+            <span id="/2021/03/10/Spring-Boot%E6%95%B4%E5%90%88EasyPoi/" class="post-meta-item leancloud_visitors" data-flag-title="Spring Boot整合EasyPoi" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
               <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
+              <span class="leancloud-visitors-count"></span>
             </span>
   
   <span class="post-meta-item">
@@ -273,7 +273,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>easypoi功能如同名字easy,主打的功能就是容易,让一个没见接触过poi的人员 就可以方便的写出Excel导出,Excel模板导出,Excel导入,Word模板导出,通过简单的注解和模板 语言(熟悉的表达式语法),完成以前复杂的写法</p>
+        <meta name="referrer" content="no-referrer" />
+easypoi功能如同名字easy,主打的功能就是容易,让一个没见接触过poi的人员 就可以方便的写出Excel导出,Excel模板导出,Excel导入,Word模板导出,通过简单的注解和模板 语言(熟悉的表达式语法),完成以前复杂的写法
+
 <span id="more"></span>
 
 <h1 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">    &lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">    &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">    &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.baomidou&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mybatis-plus-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.4.1&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;cn.afterturn&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;easypoi-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;4.2.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
@@ -301,8 +303,8 @@
 
 <h1 id="工具类-ExcelUtil"><a href="#工具类-ExcelUtil" class="headerlink" title="工具类 ExcelUtil"></a>工具类 ExcelUtil</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExcelUtil</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建workbook,</span></span><br><span class="line"><span class="comment">     * 通过maplist填充Excel内容</span></span><br><span class="line"><span class="comment">     * 返回workbook</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * 进一步使用可以写入流,e.g.</span></span><br><span class="line"><span class="comment">     * FileOutputStream fos = new FileOutputStream(file);</span></span><br><span class="line"><span class="comment">     * workbook.write(fos);</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Workbook <span class="title">mutiSheet</span><span class="params">(List&lt;Map&lt;String, Object&gt;&gt; mapListList)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ExcelExportUtil.exportExcel(mapListList, ExcelType.XSSF);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String, Object&gt; <span class="title">createOneSheet</span><span class="params">(ExportParams exportParams, Class&lt;?&gt; clazz, List&lt;?&gt; data)</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">&quot;title&quot;</span>, exportParams);</span><br><span class="line">        map.put(<span class="string">&quot;entity&quot;</span>, clazz);</span><br><span class="line">        map.put(<span class="string">&quot;data&quot;</span>, data);</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建一个表格并填充内容</span></span><br><span class="line"><span class="comment">     * 返回map供工作簿使用</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String, Object&gt; <span class="title">createOneSheet</span><span class="params">(String sheetName, String title, Class&lt;?&gt; clazz, List&lt;?&gt; data)</span> </span>&#123;</span><br><span class="line">        ExportParams exportParams = <span class="keyword">new</span> ExportParams(title, sheetName, ExcelType.XSSF);</span><br><span class="line">        <span class="keyword">return</span> createOneSheet(exportParams, clazz, data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p><img src="/images/image-20210310231703378.png" alt="image-20210310231703378"></p>
-<h2 id="导出的excel"><a href="#导出的excel" class="headerlink" title="导出的excel"></a>导出的excel</h2><p><img src="/images/image-20210310231835383.png" alt="image-20210310231835383"></p>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p><img src="https://files.mdnice.com/user/10819/b043fd7a-18ee-4a8c-99df-bd42a33c3ce3.png"></p>
+<h2 id="导出的excel"><a href="#导出的excel" class="headerlink" title="导出的excel"></a>导出的excel</h2><p><img src="https://files.mdnice.com/user/10819/0d3c5efd-0993-4b28-83c1-3f4a3dc4c9e9.png"></p>
 <p>本文源码地址：<a target="_blank" rel="noopener" href="https://github.com/jonssonyan/spring-demo/tree/master/springboot-easypoi">https://github.com/jonssonyan/spring-demo/tree/master/springboot-easypoi</a></p>
 
     </div>
@@ -422,20 +424,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -571,8 +573,9 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       return GUEST.includes(item);
     });
     new Valine({
+      requiredFields: ['nick','mail'],
       el         : '#valine-comments',
-      verify     : false,
+      verify     : true,
       notify     : false,
       appId      : 'MLb8dLzGdyUG0QLBIGhrkklS-MdYXbMMI',
       appKey     : 'r80fWmRBErFKOepUW55Lq7pt',
@@ -580,10 +583,10 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       avatar     : 'monsterid',
       meta       : guest,
       pageSize   : '10' || 10,
-      visitor    : false,
+      visitor    : true,
       lang       : 'zh-cn' || 'zh-cn',
       path       : location.pathname,
-      recordIP   : false,
+      recordIP   : true,
       serverURLs : ''
     });
   }, window.Valine);

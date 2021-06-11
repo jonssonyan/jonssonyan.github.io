@@ -20,16 +20,14 @@
     var CONFIG = {"hostname":"jonssonyan.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="GOROOT介绍在安装完Golang语言的时候，所谓的安装路径其实就是你的GOROOT路径，也就是说GOROOT存放的Golang语言内建的程式库的所在位置，而通常你安装完后，你电脑的环境变数就会设好GOROOT路径，当你开发Golang程式的时候，当你import内建的程式库的时候，并不需要额外安装，而当程式运行后，预设也会先去GOROOT路径下寻找相对应的程式库来运行。">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="article">
 <meta property="og:title" content="GOROOT GOPATH Go Modules三者的关系介绍">
 <meta property="og:url" content="https://jonssonyan.com/2021/03/08/GOROOT-GOPATH-Go-Modules%E4%B8%89%E8%80%85%E7%9A%84%E5%85%B3%E7%B3%BB%E4%BB%8B%E7%BB%8D/index.html">
 <meta property="og:site_name" content="阿壮Jonsson">
-<meta property="og:description" content="GOROOT介绍在安装完Golang语言的时候，所谓的安装路径其实就是你的GOROOT路径，也就是说GOROOT存放的Golang语言内建的程式库的所在位置，而通常你安装完后，你电脑的环境变数就会设好GOROOT路径，当你开发Golang程式的时候，当你import内建的程式库的时候，并不需要额外安装，而当程式运行后，预设也会先去GOROOT路径下寻找相对应的程式库来运行。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200924095034714.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70#pic_center">
 <meta property="article:published_time" content="2021-03-08T08:52:45.000Z">
-<meta property="article:modified_time" content="2021-05-21T13:48:52.674Z">
+<meta property="article:modified_time" content="2021-06-11T16:48:19.093Z">
 <meta property="article:author" content="Jonsson Yan">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
@@ -227,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-21 21:48:52" itemprop="dateModified" datetime="2021-05-21T21:48:52+08:00">2021-05-21</time>
+                <time title="修改时间：2021-06-12 00:48:19" itemprop="dateModified" datetime="2021-06-12T00:48:19+08:00">2021-06-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -235,17 +233,17 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+                  <a href="/categories/%E5%B9%B2%E8%B4%A7%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">干货系列</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+            <span id="/2021/03/08/GOROOT-GOPATH-Go-Modules%E4%B8%89%E8%80%85%E7%9A%84%E5%85%B3%E7%B3%BB%E4%BB%8B%E7%BB%8D/" class="post-meta-item leancloud_visitors" data-flag-title="GOROOT GOPATH Go Modules三者的关系介绍" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
               <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
+              <span class="leancloud-visitors-count"></span>
             </span>
   
   <span class="post-meta-item">
@@ -271,8 +269,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="GOROOT介绍"><a href="#GOROOT介绍" class="headerlink" title="GOROOT介绍"></a>GOROOT介绍</h1><p>在安装完Golang语言的时候，所谓的安装路径其实就是你的<code>GOROOT</code>路径，也就是说<code>GOROOT</code>存放的Golang语言内建的程式库的所在位置，而通常你安装完后，你电脑的环境变数就会设好<code>GOROOT</code>路径，当你开发Golang程式的时候，当你<code>import</code>内建的程式库的时候，并不需要额外安装，而当程式运行后，预设也会先去<code>GOROOT</code>路径下寻找相对应的程式库来运行。</p>
+        <meta name="referrer" content="no-referrer" />
+
 <span id="more"></span>
+
+<h1 id="GOROOT介绍"><a href="#GOROOT介绍" class="headerlink" title="GOROOT介绍"></a>GOROOT介绍</h1><p>在安装完Golang语言的时候，所谓的安装路径其实就是你的<code>GOROOT</code>路径，也就是说<code>GOROOT</code>存放的Golang语言内建的程式库的所在位置，而通常你安装完后，你电脑的环境变数就会设好<code>GOROOT</code>路径，当你开发Golang程式的时候，当你<code>import</code>内建的程式库的时候，并不需要额外安装，而当程式运行后，预设也会先去<code>GOROOT</code>路径下寻找相对应的程式库来运行。</p>
 <h2 id="查看Glang环境变量"><a href="#查看Glang环境变量" class="headerlink" title="查看Glang环境变量"></a>查看Glang环境变量</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> env</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20200924095034714.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3kxNTM0NDE0NDI1,size_16,color_FFFFFF,t_70#pic_center" alt="环境变量"><br><code>env</code>中有些是我已经修改过的，通常如果你是初次安装Golang语言并且没做什么环境变数设定的话，<code>GOROOT</code>设定路径就是你当初安装Golang语言的路径，而<code>GOPATH</code>通常预设会是使用者目录下的<code>go</code>资料夹。</p>
@@ -372,8 +373,8 @@
       <i class="fa fa-chevron-left"></i> Spring Boot整合Logback
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/03/08/CSS-flex%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B%E5%85%A5%E9%97%A8/" rel="next" title="CSS flex弹性盒模型入门">
-      CSS flex弹性盒模型入门 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/03/08/%5B%E8%BD%AC%5DCSS-flex%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B%E5%85%A5%E9%97%A8/" rel="next" title="[转]CSS flex弹性盒模型入门">
+      [转]CSS flex弹性盒模型入门 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -450,20 +451,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -599,8 +600,9 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       return GUEST.includes(item);
     });
     new Valine({
+      requiredFields: ['nick','mail'],
       el         : '#valine-comments',
-      verify     : false,
+      verify     : true,
       notify     : false,
       appId      : 'MLb8dLzGdyUG0QLBIGhrkklS-MdYXbMMI',
       appKey     : 'r80fWmRBErFKOepUW55Lq7pt',
@@ -608,10 +610,10 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       avatar     : 'monsterid',
       meta       : guest,
       pageSize   : '10' || 10,
-      visitor    : false,
+      visitor    : true,
       lang       : 'zh-cn' || 'zh-cn',
       path       : location.pathname,
-      recordIP   : false,
+      recordIP   : true,
       serverURLs : ''
     });
   }, window.Valine);

@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="阿壮Jonsson">
 <meta property="og:description" content="使用Java语言实现的实用算法整理">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jonssonyan.com/images/image-20210402005950687.png">
+<meta property="og:image" content="https://files.mdnice.com/user/10819/2e0572f0-1d82-4113-bcec-01d689b37392.png">
 <meta property="article:published_time" content="2021-05-04T13:03:18.000Z">
-<meta property="article:modified_time" content="2021-05-21T13:48:52.676Z">
+<meta property="article:modified_time" content="2021-06-11T16:48:19.095Z">
 <meta property="article:author" content="Jonsson Yan">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jonssonyan.com/images/image-20210402005950687.png">
+<meta name="twitter:image" content="https://files.mdnice.com/user/10819/2e0572f0-1d82-4113-bcec-01d689b37392.png">
 
 <link rel="canonical" href="https://jonssonyan.com/2021/05/04/Java%E5%AE%9E%E7%8E%B0%E7%9A%84%E7%AE%97%E6%B3%95/">
 
@@ -228,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-21 21:48:52" itemprop="dateModified" datetime="2021-05-21T21:48:52+08:00">2021-05-21</time>
+                <time title="修改时间：2021-06-12 00:48:19" itemprop="dateModified" datetime="2021-06-12T00:48:19+08:00">2021-06-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -236,17 +236,17 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                  <a href="/categories/%E5%B9%B2%E8%B4%A7%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">干货系列</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+            <span id="/2021/05/04/Java%E5%AE%9E%E7%8E%B0%E7%9A%84%E7%AE%97%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="Java实现的算法" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
               <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
+              <span class="leancloud-visitors-count"></span>
             </span>
   
   <span class="post-meta-item">
@@ -272,7 +272,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>使用Java语言实现的实用算法整理</p>
+        <meta name="referrer" content="no-referrer" />
+
+<p>使用Java语言实现的实用算法整理</p>
 <span id="more"></span>
 <h1 id="甘特图-最短工时算法"><a href="#甘特图-最短工时算法" class="headerlink" title="甘特图-最短工时算法"></a>甘特图-最短工时算法</h1><p>一个最短工时的算法，p1,p2,p3,p4为工作，分为10个作业，数字运算采用BigDecimal运算，防止精度丢失。</p>
 <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="comment">// p1 p2 p3 p4为工位，数组内的值为作业需要的时间</span></span><br><span class="line">    <span class="keyword">static</span> BigDecimal[] p1 = &#123;BigDecimal.valueOf(<span class="number">7.988652</span>), BigDecimal.valueOf(<span class="number">8.770062</span>), BigDecimal.valueOf(<span class="number">12.952448</span>), BigDecimal.valueOf(<span class="number">11.160148</span>), BigDecimal.valueOf(<span class="number">16.0201</span>), BigDecimal.valueOf(<span class="number">9.87088</span>), BigDecimal.valueOf(<span class="number">13.284036</span>), BigDecimal.valueOf(<span class="number">19.07412</span>), BigDecimal.valueOf(<span class="number">20.058414</span>), BigDecimal.valueOf(<span class="number">15.014602</span>)&#125;;</span><br><span class="line">    <span class="keyword">static</span> BigDecimal[] p2 = &#123;BigDecimal.valueOf(<span class="number">9.936646</span>), BigDecimal.valueOf(<span class="number">13.722012</span>), BigDecimal.valueOf(<span class="number">7.010982</span>), BigDecimal.valueOf(<span class="number">16.496146</span>), BigDecimal.valueOf(<span class="number">8.82748</span>), BigDecimal.valueOf(<span class="number">19.907534</span>), BigDecimal.valueOf(<span class="number">14.962134</span>), BigDecimal.valueOf(<span class="number">20.094358</span>), BigDecimal.valueOf(<span class="number">15.97263</span>), BigDecimal.valueOf(<span class="number">12.03512</span>)&#125;;</span><br><span class="line">    <span class="keyword">static</span> BigDecimal[] p3 = &#123;BigDecimal.valueOf(<span class="number">5.935868</span>), BigDecimal.valueOf(<span class="number">13.005208</span>), BigDecimal.valueOf(<span class="number">9.04917</span>), BigDecimal.valueOf(<span class="number">12.013664</span>), BigDecimal.valueOf(<span class="number">18.114384</span>), BigDecimal.valueOf(<span class="number">17.928158</span>), BigDecimal.valueOf(<span class="number">19.846022</span>), BigDecimal.valueOf(<span class="number">14.148532</span>), BigDecimal.valueOf(<span class="number">14.970352</span>), BigDecimal.valueOf(<span class="number">7.041914</span>)&#125;;</span><br><span class="line">    <span class="keyword">static</span> BigDecimal[] p4 = &#123;BigDecimal.valueOf(<span class="number">18.128398</span>), BigDecimal.valueOf(<span class="number">11.24949</span>), BigDecimal.valueOf(<span class="number">16.052406</span>), BigDecimal.valueOf(<span class="number">19.087604</span>), BigDecimal.valueOf(<span class="number">16.831394</span>), BigDecimal.valueOf(<span class="number">18.942358</span>), BigDecimal.valueOf(<span class="number">20.012922</span>), BigDecimal.valueOf(<span class="number">13.883878</span>), BigDecimal.valueOf(<span class="number">15.116388</span>), BigDecimal.valueOf(<span class="number">8.949654</span>)&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> BigDecimal[][] sum = &#123;p2, p3, p4&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> BigDecimal <span class="title">sum</span><span class="params">(BigDecimal[] a, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (n &lt; <span class="number">1</span>) ? p1[<span class="number">0</span>] : sum(a, n - <span class="number">1</span>).add(a[n]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 用于存储最长时间的数组</span></span><br><span class="line">        BigDecimal[] end = <span class="keyword">new</span> BigDecimal[p1.length];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; end.length; i++) &#123;</span><br><span class="line">            end[i] = sum(p1, i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (BigDecimal[] ints : sum) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ints.length; i++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</span><br><span class="line">                    end[i] = end[i].add(ints[i]);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    end[i] = (end[i - <span class="number">1</span>].compareTo(end[i]) &gt; <span class="number">0</span> ? end[i - <span class="number">1</span>] : end[i]).add(ints[i]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 取出数组中最大的数就是最短工时</span></span><br><span class="line">        System.out.println(<span class="string">&quot;最短工时:&quot;</span> + Arrays.stream(end).max(BigDecimal::compareTo).get().toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -287,7 +289,7 @@
 <p>仿照这个逻辑于是也写了一个，实现给出一个value为前缀字符串的Map集合，找出需求字符串匹配最长前缀的key值</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        HashMap&lt;Long, String&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="number">11L</span>, <span class="string">&quot;上海路&quot;</span>);</span><br><span class="line">        map.put(<span class="number">20L</span>, <span class="string">&quot;南京路&quot;</span>);</span><br><span class="line">        System.out.println(startPrefixLongest(map, <span class="string">&quot;上海路陆家嘴&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 匹配字符串最长前缀</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> collect key-&gt;主键 value-&gt;前缀</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name    需要匹配的字符串</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 最长前缀的key, 返回null表示没有前缀匹配上</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Long <span class="title">startPrefixLongest</span><span class="params">(Map&lt;Long, String&gt; collect, String name)</span> </span>&#123;</span><br><span class="line">        String newName = name.toUpperCase();</span><br><span class="line">        Long id = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">int</span> maxLength = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;Long, String&gt; next : collect.entrySet()) &#123;</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">char</span>[] ta = newName.toCharArray();</span><br><span class="line">            <span class="keyword">int</span> to = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">char</span>[] pa = next.getValue().toUpperCase().toCharArray();</span><br><span class="line">            <span class="keyword">int</span> po = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> pc = next.getValue().toCharArray().length;</span><br><span class="line">            <span class="comment">// Note: toffset might be near -1&gt;&gt;&gt;1.</span></span><br><span class="line">            <span class="keyword">if</span> (to &gt; ta.length - pc) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (--pc &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (ta[to++] != pa[po++]) &#123;</span><br><span class="line">                    flag = <span class="keyword">false</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!flag) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span> (next.getValue().toCharArray().length &gt; maxLength) &#123;</span><br><span class="line">                maxLength = next.getValue().toCharArray().length;</span><br><span class="line">                id = next.getKey();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>测试结果</p>
-<p><img src="/images/image-20210402005950687.png" alt="image-20210402005950687"></p>
+<p><img src="https://files.mdnice.com/user/10819/2e0572f0-1d82-4113-bcec-01d689b37392.png"></p>
 
     </div>
 
@@ -406,20 +408,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -555,8 +557,9 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       return GUEST.includes(item);
     });
     new Valine({
+      requiredFields: ['nick','mail'],
       el         : '#valine-comments',
-      verify     : false,
+      verify     : true,
       notify     : false,
       appId      : 'MLb8dLzGdyUG0QLBIGhrkklS-MdYXbMMI',
       appKey     : 'r80fWmRBErFKOepUW55Lq7pt',
@@ -564,10 +567,10 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       avatar     : 'monsterid',
       meta       : guest,
       pageSize   : '10' || 10,
-      visitor    : false,
+      visitor    : true,
       lang       : 'zh-cn' || 'zh-cn',
       path       : location.pathname,
-      recordIP   : false,
+      recordIP   : true,
       serverURLs : ''
     });
   }, window.Valine);

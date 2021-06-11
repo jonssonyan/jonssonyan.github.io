@@ -214,8 +214,8 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2021/03/08/CSS-flex%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B%E5%85%A5%E9%97%A8/" itemprop="url">
-            <span itemprop="name">CSS flex弹性盒模型入门</span>
+          <a class="post-title-link" href="/2021/03/08/%5B%E8%BD%AC%5DCSS-flex%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B%E5%85%A5%E9%97%A8/" itemprop="url">
+            <span itemprop="name">[转]CSS flex弹性盒模型入门</span>
           </a>
       </div>
 
@@ -295,20 +295,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -444,8 +444,9 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       return GUEST.includes(item);
     });
     new Valine({
+      requiredFields: ['nick','mail'],
       el         : '#valine-comments',
-      verify     : false,
+      verify     : true,
       notify     : false,
       appId      : 'MLb8dLzGdyUG0QLBIGhrkklS-MdYXbMMI',
       appKey     : 'r80fWmRBErFKOepUW55Lq7pt',
@@ -453,10 +454,10 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       avatar     : 'monsterid',
       meta       : guest,
       pageSize   : '10' || 10,
-      visitor    : false,
+      visitor    : true,
       lang       : 'zh-cn' || 'zh-cn',
       path       : location.pathname,
-      recordIP   : false,
+      recordIP   : true,
       serverURLs : ''
     });
   }, window.Valine);

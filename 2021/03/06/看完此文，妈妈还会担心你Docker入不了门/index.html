@@ -27,13 +27,13 @@
 <meta property="og:site_name" content="阿壮Jonsson">
 <meta property="og:description" content="Docker 是一个开源的应用容器引擎，基于 Go 语言。Docker可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jonssonyan.com/images/20200815233403201.png#pic_center">
+<meta property="og:image" content="https://files.mdnice.com/user/10819/b9a1a510-bb58-4d71-9e09-f51e6263678a.png">
 <meta property="article:published_time" content="2021-03-06T13:24:09.000Z">
-<meta property="article:modified_time" content="2021-06-09T16:56:40.443Z">
+<meta property="article:modified_time" content="2021-06-11T16:48:19.110Z">
 <meta property="article:author" content="Jonsson Yan">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jonssonyan.com/images/20200815233403201.png#pic_center">
+<meta name="twitter:image" content="https://files.mdnice.com/user/10819/b9a1a510-bb58-4d71-9e09-f51e6263678a.png">
 
 <link rel="canonical" href="https://jonssonyan.com/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0Docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8/">
 
@@ -227,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-10 00:56:40" itemprop="dateModified" datetime="2021-06-10T00:56:40+08:00">2021-06-10</time>
+                <time title="修改时间：2021-06-12 00:48:19" itemprop="dateModified" datetime="2021-06-12T00:48:19+08:00">2021-06-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -235,17 +235,17 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B9%B2%E8%B4%A7/" itemprop="url" rel="index"><span itemprop="name">干货</span></a>
+                  <a href="/categories/%E5%B9%B2%E8%B4%A7%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">干货系列</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+            <span id="/2021/03/06/%E7%9C%8B%E5%AE%8C%E6%AD%A4%E6%96%87%EF%BC%8C%E5%A6%88%E5%A6%88%E8%BF%98%E4%BC%9A%E6%8B%85%E5%BF%83%E4%BD%A0Docker%E5%85%A5%E4%B8%8D%E4%BA%86%E9%97%A8/" class="post-meta-item leancloud_visitors" data-flag-title="看完此文，妈妈还会担心你Docker入不了门？" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
               <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
+              <span class="leancloud-visitors-count"></span>
             </span>
   
   <span class="post-meta-item">
@@ -271,7 +271,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Docker 是一个开源的应用容器引擎，基于 Go 语言。Docker可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。</p>
+        <meta name="referrer" content="no-referrer" />
+
+<p>Docker 是一个开源的应用容器引擎，基于 Go 语言。Docker可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。</p>
 <span id="more"></span>
 
 <h1 id="Linux下安装Docker"><a href="#Linux下安装Docker" class="headerlink" title="Linux下安装Docker"></a>Linux下安装Docker</h1><h2 id="卸载旧版本"><a href="#卸载旧版本" class="headerlink" title="卸载旧版本"></a>卸载旧版本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-engine</span><br></pre></td></tr></table></figure>
@@ -328,7 +330,7 @@
 <h2 id="修改数据库密码"><a href="#修改数据库密码" class="headerlink" title="修改数据库密码"></a>修改数据库密码</h2><ol>
 <li>此时运行 <code>docker ps</code> 可以看到容器正在运行</li>
 </ol>
-<p><img src="/images/20200815233403201.png#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://files.mdnice.com/user/10819/b9a1a510-bb58-4d71-9e09-f51e6263678a.png"></p>
 <ol start="2">
 <li>进入到容器命令</li>
 </ol>
@@ -382,7 +384,7 @@
 
 <h2 id="查看启动日志"><a href="#查看启动日志" class="headerlink" title="查看启动日志"></a>查看启动日志</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs -n 300 -f jonsson-8888</span><br></pre></td></tr></table></figure>
 
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1] <a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/introduction/why">《Docker 从入门到实践》</a><br>[2] <a target="_blank" rel="noopener" href="https://hub.docker.com/">https://hub.docker.com/</a></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] 《Docker 从入门到实践》: <a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/introduction/why">https://yeasy.gitbook.io/docker_practice/introduction/why</a><br>[2] Docker Hub: <a target="_blank" rel="noopener" href="https://hub.docker.com/">https://hub.docker.com/</a></p>
 
     </div>
 
@@ -484,7 +486,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E4%B8%8B%E5%AE%89%E8%A3%85Docker"><span class="nav-number">1.</span> <span class="nav-text">Linux下安装Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD%E6%97%A7%E7%89%88%E6%9C%AC"><span class="nav-number">1.1.</span> <span class="nav-text">卸载旧版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85yum-utils%E8%BD%AF%E4%BB%B6%E5%8C%85%EF%BC%88%E6%8F%90%E4%BE%9Byum-config-manager-%E5%AE%9E%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">安装yum-utils软件包（提供yum-config-manager 实用程序）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%A8%B3%E5%AE%9A%E7%9A%84%E5%AD%98%E5%82%A8%E5%BA%93%EF%BC%88%E4%BD%BF%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91%E9%95%9C%E5%83%8F%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">设置稳定的存储库（使用阿里云镜像）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E7%BC%93%E5%AD%98"><span class="nav-number">1.4.</span> <span class="nav-text">更新缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84Docker-Engine%E5%92%8C%E5%AE%B9%E5%99%A8%EF%BC%8C%E6%88%96%E8%BD%AC%E5%88%B0%E4%B8%8B%E4%B8%80%E6%AD%A5%E4%BB%A5%E5%AE%89%E8%A3%85%E7%89%B9%E5%AE%9A%E7%89%88%E6%9C%AC"><span class="nav-number">1.5.</span> <span class="nav-text">安装最新版本的Docker Engine和容器，或转到下一步以安装特定版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8Docker"><span class="nav-number">1.6.</span> <span class="nav-text">启动Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEDocker"><span class="nav-number">1.7.</span> <span class="nav-text">配置Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">1.7.1.</span> <span class="nav-text">创建目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%95%9C%E5%83%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.7.2.</span> <span class="nav-text">创建一个镜像配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E6%B7%BB%E5%8A%A0%E9%95%9C%E5%83%8F"><span class="nav-number">1.7.3.</span> <span class="nav-text">配置文件中添加镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%96%B0%E5%8A%A0%E8%BD%BD%E6%96%87%E4%BB%B6%E5%B9%B6%E9%87%8D%E5%90%AFdocker"><span class="nav-number">1.7.4.</span> <span class="nav-text">重新加载文件并重启docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%85%B6%E4%BB%96%E7%9A%84%E5%8A%A0%E9%80%9F%E7%AB%99%E7%82%B9"><span class="nav-number">1.7.5.</span> <span class="nav-text">一些其他的加速站点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BDDocker"><span class="nav-number">1.8.</span> <span class="nav-text">卸载Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BDDocker-Engine%EF%BC%8CCLI%E5%92%8CContainerd%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="nav-number">1.8.1.</span> <span class="nav-text">卸载Docker Engine，CLI和Containerd软件包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E6%9C%BA%E4%B8%8A%E7%9A%84%E6%98%A0%E5%83%8F%EF%BC%8C%E5%AE%B9%E5%99%A8%EF%BC%8C%E5%8D%B7%E6%88%96%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E5%88%A0%E9%99%A4%E3%80%82%E8%A6%81%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89%E5%9B%BE%E5%83%8F%EF%BC%8C%E5%AE%B9%E5%99%A8%E5%92%8C%E5%8D%B7"><span class="nav-number">1.8.2.</span> <span class="nav-text">主机上的映像，容器，卷或自定义配置文件不会自动删除。要删除所有图像，容器和卷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.9.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E6%8C%87%E4%BB%A4"><span class="nav-number">1.9.1.</span> <span class="nav-text">镜像指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E6%8C%87%E4%BB%A4"><span class="nav-number">1.9.2.</span> <span class="nav-text">容器指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%87%E4%BB%A4"><span class="nav-number">1.9.3.</span> <span class="nav-text">数据卷指令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker%E4%B8%8B%E5%AE%89%E8%A3%85MySQL5-7-31"><span class="nav-number">2.</span> <span class="nav-text">Docker下安装MySQL5.7.31</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%89%E5%8F%96Mysql-5-7-31%E9%95%9C%E5%83%8F"><span class="nav-number">2.1.</span> <span class="nav-text">拉取Mysql 5.7.31镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8CMysql-5-7-31"><span class="nav-number">2.2.</span> <span class="nav-text">运行Mysql 5.7.31</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%86%E7%A0%81"><span class="nav-number">2.3.</span> <span class="nav-text">修改数据库密码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dcoker%E4%B8%8B%E5%AE%89%E8%A3%85Redis"><span class="nav-number">3.</span> <span class="nav-text">Dcoker下安装Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.</span> <span class="nav-text">安装命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%86jar%E5%8C%85%E5%81%9A%E6%88%90Docker%E9%95%9C%E5%83%8F%EF%BC%8C%E5%B9%B6%E8%BF%90%E8%A1%8C"><span class="nav-number">4.</span> <span class="nav-text">将jar包做成Docker镜像，并运行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0jar%E5%8C%85%E6%96%87%E4%BB%B6%E5%92%8CDockerfile%E6%96%87%E4%BB%B6%E8%87%B3%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">4.1.</span> <span class="nav-text">上传jar包文件和Dockerfile文件至服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E9%95%9C%E5%83%8F"><span class="nav-number">4.2.</span> <span class="nav-text">打包镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8"><span class="nav-number">4.3.</span> <span class="nav-text">运行容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%90%AF%E5%8A%A8%E6%97%A5%E5%BF%97"><span class="nav-number">4.4.</span> <span class="nav-text">查看启动日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E4%B8%8B%E5%AE%89%E8%A3%85Docker"><span class="nav-number">1.</span> <span class="nav-text">Linux下安装Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD%E6%97%A7%E7%89%88%E6%9C%AC"><span class="nav-number">1.1.</span> <span class="nav-text">卸载旧版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85yum-utils%E8%BD%AF%E4%BB%B6%E5%8C%85%EF%BC%88%E6%8F%90%E4%BE%9Byum-config-manager-%E5%AE%9E%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">安装yum-utils软件包（提供yum-config-manager 实用程序）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%A8%B3%E5%AE%9A%E7%9A%84%E5%AD%98%E5%82%A8%E5%BA%93%EF%BC%88%E4%BD%BF%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91%E9%95%9C%E5%83%8F%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">设置稳定的存储库（使用阿里云镜像）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E7%BC%93%E5%AD%98"><span class="nav-number">1.4.</span> <span class="nav-text">更新缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84Docker-Engine%E5%92%8C%E5%AE%B9%E5%99%A8%EF%BC%8C%E6%88%96%E8%BD%AC%E5%88%B0%E4%B8%8B%E4%B8%80%E6%AD%A5%E4%BB%A5%E5%AE%89%E8%A3%85%E7%89%B9%E5%AE%9A%E7%89%88%E6%9C%AC"><span class="nav-number">1.5.</span> <span class="nav-text">安装最新版本的Docker Engine和容器，或转到下一步以安装特定版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8Docker"><span class="nav-number">1.6.</span> <span class="nav-text">启动Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEDocker"><span class="nav-number">1.7.</span> <span class="nav-text">配置Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">1.7.1.</span> <span class="nav-text">创建目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%95%9C%E5%83%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.7.2.</span> <span class="nav-text">创建一个镜像配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E6%B7%BB%E5%8A%A0%E9%95%9C%E5%83%8F"><span class="nav-number">1.7.3.</span> <span class="nav-text">配置文件中添加镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%96%B0%E5%8A%A0%E8%BD%BD%E6%96%87%E4%BB%B6%E5%B9%B6%E9%87%8D%E5%90%AFdocker"><span class="nav-number">1.7.4.</span> <span class="nav-text">重新加载文件并重启docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%85%B6%E4%BB%96%E7%9A%84%E5%8A%A0%E9%80%9F%E7%AB%99%E7%82%B9"><span class="nav-number">1.7.5.</span> <span class="nav-text">一些其他的加速站点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BDDocker"><span class="nav-number">1.8.</span> <span class="nav-text">卸载Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BDDocker-Engine%EF%BC%8CCLI%E5%92%8CContainerd%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="nav-number">1.8.1.</span> <span class="nav-text">卸载Docker Engine，CLI和Containerd软件包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E6%9C%BA%E4%B8%8A%E7%9A%84%E6%98%A0%E5%83%8F%EF%BC%8C%E5%AE%B9%E5%99%A8%EF%BC%8C%E5%8D%B7%E6%88%96%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E5%88%A0%E9%99%A4%E3%80%82%E8%A6%81%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89%E5%9B%BE%E5%83%8F%EF%BC%8C%E5%AE%B9%E5%99%A8%E5%92%8C%E5%8D%B7"><span class="nav-number">1.8.2.</span> <span class="nav-text">主机上的映像，容器，卷或自定义配置文件不会自动删除。要删除所有图像，容器和卷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.9.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E6%8C%87%E4%BB%A4"><span class="nav-number">1.9.1.</span> <span class="nav-text">镜像指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E6%8C%87%E4%BB%A4"><span class="nav-number">1.9.2.</span> <span class="nav-text">容器指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%87%E4%BB%A4"><span class="nav-number">1.9.3.</span> <span class="nav-text">数据卷指令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker%E4%B8%8B%E5%AE%89%E8%A3%85MySQL5-7-31"><span class="nav-number">2.</span> <span class="nav-text">Docker下安装MySQL5.7.31</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%89%E5%8F%96Mysql-5-7-31%E9%95%9C%E5%83%8F"><span class="nav-number">2.1.</span> <span class="nav-text">拉取Mysql 5.7.31镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8CMysql-5-7-31"><span class="nav-number">2.2.</span> <span class="nav-text">运行Mysql 5.7.31</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%86%E7%A0%81"><span class="nav-number">2.3.</span> <span class="nav-text">修改数据库密码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dcoker%E4%B8%8B%E5%AE%89%E8%A3%85Redis"><span class="nav-number">3.</span> <span class="nav-text">Dcoker下安装Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.</span> <span class="nav-text">安装命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%86jar%E5%8C%85%E5%81%9A%E6%88%90Docker%E9%95%9C%E5%83%8F%EF%BC%8C%E5%B9%B6%E8%BF%90%E8%A1%8C"><span class="nav-number">4.</span> <span class="nav-text">将jar包做成Docker镜像，并运行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0jar%E5%8C%85%E6%96%87%E4%BB%B6%E5%92%8CDockerfile%E6%96%87%E4%BB%B6%E8%87%B3%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">4.1.</span> <span class="nav-text">上传jar包文件和Dockerfile文件至服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E9%95%9C%E5%83%8F"><span class="nav-number">4.2.</span> <span class="nav-text">打包镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8"><span class="nav-number">4.3.</span> <span class="nav-text">运行容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%90%AF%E5%8A%A8%E6%97%A5%E5%BF%97"><span class="nav-number">4.4.</span> <span class="nav-text">查看启动日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -500,20 +502,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -649,8 +651,9 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       return GUEST.includes(item);
     });
     new Valine({
+      requiredFields: ['nick','mail'],
       el         : '#valine-comments',
-      verify     : false,
+      verify     : true,
       notify     : false,
       appId      : 'MLb8dLzGdyUG0QLBIGhrkklS-MdYXbMMI',
       appKey     : 'r80fWmRBErFKOepUW55Lq7pt',
@@ -658,10 +661,10 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       avatar     : 'monsterid',
       meta       : guest,
       pageSize   : '10' || 10,
-      visitor    : false,
+      visitor    : true,
       lang       : 'zh-cn' || 'zh-cn',
       path       : location.pathname,
-      recordIP   : false,
+      recordIP   : true,
       serverURLs : ''
     });
   }, window.Valine);
