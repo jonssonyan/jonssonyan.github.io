@@ -4,7 +4,7 @@
     <title>2021年，推荐你学习的编程语言</title>
     <url>/2021/06/12/2021%E5%B9%B4%EF%BC%8C%E6%8E%A8%E8%8D%90%E4%BD%A0%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/</url>
     <content><![CDATA[<meta name="referrer" content="no-referrer"/>
-各类编程语言横向对比
+
 
 <span id="more"></span>
 <p>Hi~ 大家好啊，我是阿壮，就是力拔山兮气盖世的那个壮，一个还算有趣的程序员，今天和大家聊一聊那些编程语言值得学习，本文讲的东西一部分来自网络，一部分是我自己的理解，希望对你有些帮助。</p>
@@ -28,6 +28,9 @@
 <p>硬件相关: 汇编，C/C++<br><br>操作系统: 汇编，C/C+，Rust<br><br>安卓开发: Java，Kotlin，C++<br><br>IOS 开发: Object-C，Swift，C++<br><br>移动端跨平台: Dart（Flutter），JS（uni-app&amp;React Native）<br><br>桌面应用开发: JS（Electron），C#（MFC），C++（QT），Java<br><br>服务端开发: Java，Go，C++，Python，PHP，JS（Node）<br><br>前端: JavaScript<br><br>游戏开发: C#，C++，Java<br><br>人工智能: Python，Java，C++<br><br>大数据: Python，Java，Scala<br><br>计算机视觉: C++，Python</p>
 <p>我是阿壮，微信搜一搜: 科技猫，关注这个还算有趣的程序员，我们下期见</p>
 ]]></content>
+      <categories>
+        <category>见闻感悟</category>
+      </categories>
   </entry>
   <entry>
     <title>Elasticsearch常用操作</title>
