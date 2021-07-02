@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jonssonyan.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Go语言记录">
+<meta property="og:url" content="https://jonssonyan.com/2021/07/02/Go%E8%AF%AD%E8%A8%80%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="阿壮Jonsson">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-02T14:03:11.000Z">
+<meta property="article:modified_time" content="2021-07-02T14:06:06.097Z">
+<meta property="article:author" content="Jonsson Yan">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jonssonyan.com/2021/07/02/Go%E8%AF%AD%E8%A8%80%E8%AE%B0%E5%BD%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Go语言记录 | 阿壮Jonsson</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">阿壮Jonsson</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">怕什么真理无穷，进一步有进一步的欢喜。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jonssonyan.com/2021/07/02/Go%E8%AF%AD%E8%A8%80%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tx.jpg">
+      <meta itemprop="name" content="Jonsson Yan">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿壮Jonsson">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Go语言记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-02 22:03:11 / 修改时间：22:06:06" itemprop="dateCreated datePublished" datetime="2021-07-02T22:03:11+08:00">2021-07-02</time>
+            </span>
+
+          
+            <span id="/2021/07/02/Go%E8%AF%AD%E8%A8%80%E8%AE%B0%E5%BD%95/" class="post-meta-item leancloud_visitors" data-flag-title="Go语言记录" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/07/02/Go%E8%AF%AD%E8%A8%80%E8%AE%B0%E5%BD%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/02/Go%E8%AF%AD%E8%A8%80%E8%AE%B0%E5%BD%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <meta name="referrer" content="no-referrer"/>
+
+
+<span id="more"></span>
+
+<h1 id="GO语言占位符"><a href="#GO语言占位符" class="headerlink" title="GO语言占位符"></a>GO语言占位符</h1><h2 id="普通占位符"><a href="#普通占位符" class="headerlink" title="普通占位符"></a>普通占位符</h2><table>
+<thead>
+<tr>
+<th>占位符</th>
+<th>说明</th>
+<th>举例</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%v</td>
+<td>相应值的默认格式</td>
+<td>Printf(“%v”, people)</td>
+<td>{zhangsan}</td>
+</tr>
+<tr>
+<td>%+v</td>
+<td>打印结构体时，会添加字段名</td>
+<td>Printf(“%+v”, people)</td>
+<td>{Name:zhangsan}</td>
+</tr>
+<tr>
+<td>%#v</td>
+<td>相应值的 Go 语法表示</td>
+<td>Printf(“#v”, people)</td>
+<td>main.Human{Name:”zhangsan”}</td>
+</tr>
+<tr>
+<td>%T</td>
+<td>相应值的类型的 Go 语法表示</td>
+<td>Printf(“%T”, people)</td>
+<td>main.Human</td>
+</tr>
+<tr>
+<td>%%</td>
+<td>字面上的百分号，并非值的占位符</td>
+<td>Printf(“%%”)</td>
+<td>%</td>
+</tr>
+</tbody></table>
+<h2 id="布尔占位符"><a href="#布尔占位符" class="headerlink" title="布尔占位符"></a>布尔占位符</h2><table>
+<thead>
+<tr>
+<th>占位符</th>
+<th>说明</th>
+<th>举例</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%t</td>
+<td>true 或 false</td>
+<td>Printf(“%t”, true)</td>
+<td>true</td>
+</tr>
+</tbody></table>
+<h2 id="整数占位符"><a href="#整数占位符" class="headerlink" title="整数占位符"></a>整数占位符</h2><table>
+<thead>
+<tr>
+<th>占位符</th>
+<th>说明</th>
+<th>举例</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%b</td>
+<td>二进制表示</td>
+<td>Printf(“%b”, 5)</td>
+<td>101</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>相应 Unicode 码点所表示的字符</td>
+<td>Printf(“%c”, 0x4E2D)</td>
+<td>中</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>十进制表示</td>
+<td>Printf(“%d”, 0x12)</td>
+<td>18</td>
+</tr>
+<tr>
+<td>%o</td>
+<td>八进制表示</td>
+<td>Printf(“%d”, 10)</td>
+<td>12</td>
+</tr>
+<tr>
+<td>%q</td>
+<td>单引号围绕的字符字面值， 由 Go 语法安全地转义</td>
+<td>Printf(“%q”, 0x4E2D)</td>
+<td>‘中’</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>十六进制表示，字母形式为小写 a-f</td>
+<td>Printf(“%x”, 13)</td>
+<td>d</td>
+</tr>
+<tr>
+<td>%X</td>
+<td>十六进制表示，字母形式为大写 A-F</td>
+<td>Printf(“%x”, 13)</td>
+<td>D</td>
+</tr>
+<tr>
+<td>%U</td>
+<td>Unicode 格式：U+1234，等同于 “U+%04X”</td>
+<td>Printf(“%U”, 0x4E2D)</td>
+<td>U+4E2D</td>
+</tr>
+</tbody></table>
+<h2 id="浮点数和复数的组成部分（实部和虚部）"><a href="#浮点数和复数的组成部分（实部和虚部）" class="headerlink" title="浮点数和复数的组成部分（实部和虚部）"></a>浮点数和复数的组成部分（实部和虚部）</h2><table>
+<thead>
+<tr>
+<th>占位符</th>
+<th>说明</th>
+<th>举例</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%b</td>
+<td>无小数部分的，指数为二的幂的科学计数法，与 strconv.FormatFloat 的 ‘b’ 转换格式一致。</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>%e</td>
+<td>科学计数法</td>
+<td>Printf(“%e”, 10.2)</td>
+<td>1.020000e+01</td>
+</tr>
+<tr>
+<td>%E</td>
+<td>科学计数法</td>
+<td>Printf(“%e”, 10.2)</td>
+<td>1.020000E+01</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>有小数点而无指数</td>
+<td>Printf(“%f”, 10.2)</td>
+<td>10.200000</td>
+</tr>
+<tr>
+<td>%g</td>
+<td>根据情况选择 %e 或 %f</td>
+<td>Printf(“%g”, 10.20)</td>
+<td>10.2</td>
+</tr>
+<tr>
+<td>%G</td>
+<td>根据情况选择 %E 或 %f</td>
+<td>Printf(“%G”, 10.20+2i)</td>
+<td>(10.2+2i)</td>
+</tr>
+</tbody></table>
+<h2 id="字符串与字节切片"><a href="#字符串与字节切片" class="headerlink" title="字符串与字节切片"></a>字符串与字节切片</h2><table>
+<thead>
+<tr>
+<th>占位符</th>
+<th>说明</th>
+<th>举例</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%s</td>
+<td>输出字符串表示（string 类型或[]byte)</td>
+<td>Printf(“%s”, []byte(“Go 语言”))</td>
+<td>Go 语言</td>
+</tr>
+<tr>
+<td>%q</td>
+<td>双引号围绕的字符串</td>
+<td>Printf(“%q”, “Go 语言”)</td>
+<td>“Go 语言”</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>十六进制, 小写字母, 每字节两个字符</td>
+<td>Printf(“%x”, “golang”)</td>
+<td>676f6c616e67</td>
+</tr>
+<tr>
+<td>%X</td>
+<td>十六进制, 大写字母, 每字节两个字符</td>
+<td>Printf(“%X”, “golang”)</td>
+<td>676F6C616E67</td>
+</tr>
+</tbody></table>
+<h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><table>
+<thead>
+<tr>
+<th>占位符</th>
+<th>说明</th>
+<th>举例</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%p</td>
+<td>十六进制表示，前缀 0x</td>
+<td>Printf(“%p”, &amp;people)</td>
+<td>0x4f57f0</td>
+</tr>
+</tbody></table>
+<h1 id="Go语言命名规范"><a href="#Go语言命名规范" class="headerlink" title="Go语言命名规范"></a>Go语言命名规范</h1><h2 id="包名称"><a href="#包名称" class="headerlink" title="包名称"></a>包名称</h2><p>包名应该为小写单词，不要使用下划线或者混合大小写。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> domain</span><br><span class="line"><span class="keyword">package</span> main</span><br></pre></td></tr></table></figure>
+
+<h2 id="文件命名"><a href="#文件命名" class="headerlink" title="文件命名"></a>文件命名</h2><p>应该为小写单词，使用下划线分隔各个单词。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">approve_service.<span class="keyword">go</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="结构体命名"><a href="#结构体命名" class="headerlink" title="结构体命名"></a>结构体命名</h2><p>采用驼峰命名法，首字母根据访问控制大写或者小写</p>
+<p>struct 申明和初始化格式采用多行，例如下面：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> MainConfig <span class="keyword">struct</span> &#123;</span><br><span class="line">    Port <span class="keyword">string</span> <span class="string">`json:&quot;port&quot;`</span></span><br><span class="line">    Address <span class="keyword">string</span> <span class="string">`json:&quot;address&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line">config := MainConfig&#123;<span class="string">&quot;1234&quot;</span>, <span class="string">&quot;123.221.134&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="接口命名"><a href="#接口命名" class="headerlink" title="接口命名"></a>接口命名</h2><ul>
+<li>命名规则基本和上面的结构体类型</li>
+<li>单个函数的结构名以 “er” 作为后缀，例如 Reader , Writer</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Reader <span class="keyword">interface</span> &#123;</span><br><span class="line">        Read(p []<span class="keyword">byte</span>) (n <span class="keyword">int</span>, err error)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量命名"><a href="#变量命名" class="headerlink" title="变量命名"></a>变量命名</h2><p>变量命名<br>和结构体类似，变量名称一般遵循驼峰法，首字母根据访问控制原则大写或者小写，但遇到特有名词时，需要遵循以下规则：</p>
+<ul>
+<li>如果变量为私有，且特有名词为首个单词，则使用小写，如 appService</li>
+<li>若变量类型为 bool 类型，则名称应以 Has, Is, Can 或 Allow 开头</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isExist <span class="keyword">bool</span></span><br><span class="line"><span class="keyword">var</span> hasConflict <span class="keyword">bool</span></span><br><span class="line"><span class="keyword">var</span> canManage <span class="keyword">bool</span></span><br><span class="line"><span class="keyword">var</span> allowGitHook <span class="keyword">bool</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="常量命名"><a href="#常量命名" class="headerlink" title="常量命名"></a>常量命名</h2><p>常量均需使用全部大写字母组成，并使用下划线分词。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> APP_URL = <span class="string">&quot;https://www.baidu.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果是枚举类型的常量，需要先创建相应类型：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Scheme <span class="keyword">string</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">    HTTP  Scheme = <span class="string">&quot;http&quot;</span></span><br><span class="line">    HTTPS Scheme = <span class="string">&quot;https&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><ul>
+<li>错误处理的原则就是不能丢弃任何有返回 err 的调用，不要使用 _ 丢弃，必须全部处理。接收到错误，要么返回 err，或者使用 log 记录下来</li>
+<li>尽早 return：一旦有错误发生，马上返回</li>
+<li>尽量不要使用 panic，除非你知道你在做什么</li>
+<li>错误描述如果是英文必须为小写，不需要标点结尾</li>
+<li>采用独立的错误流进行处理</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 错误写法</span></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="comment">// error handling</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// normal code</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确写法</span></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="comment">// error handling</span></span><br><span class="line">    <span class="keyword">return</span> <span class="comment">// or continue, etc.</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// normal code</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><p>单元测试文件名命名规范为 example_test.go 测试用例的函数名称必须以 Test 开头，例如：TestExample 每个重要的函数都要首先编写测试用例，测试用例和正规代码一起提交方便进行回归测试 。</p>
+<h1 id="Go什么情况下使用指针"><a href="#Go什么情况下使用指针" class="headerlink" title="Go什么情况下使用指针"></a>Go什么情况下使用指针</h1><ul>
+<li>推荐在方法上使用指针（前提是这个类型不是 map、slice 等引用类型）</li>
+<li>当结构体较大的时候使用指针会更高效，可以避免内存拷贝，“结构较大” 到底多大才算大可能需要自己或团队衡量，如超过 5 个字段或者根据结构体内存占用来计算</li>
+<li>如果要修改结构体内部的数据或状态必须使用指针</li>
+<li>如果方法的receiver是map、slice 、channel等引用类型不要使用指针</li>
+<li>小数据类型如 bool、int 等没必要使用指针传递</li>
+<li>如果该函数会修改receiver或变量等，使用指针</li>
+</ul>
+<h1 id="Go语言内存逃逸"><a href="#Go语言内存逃逸" class="headerlink" title="Go语言内存逃逸"></a>Go语言内存逃逸</h1><h2 id="逃逸分析的作用是什么呢？"><a href="#逃逸分析的作用是什么呢？" class="headerlink" title="逃逸分析的作用是什么呢？"></a>逃逸分析的作用是什么呢？</h2><ol>
+<li>逃逸分析的好处是为了减少gc的压力，不逃逸的对象分配在栈上，当函数返回时就回收了资源，不需要gc标记清除。</li>
+<li>逃逸分析完后可以确定哪些变量可以分配在栈上，栈的分配比堆快，性能好(逃逸的局部变量会在堆上分配 ,而没有发生逃逸的则有编译器在栈上分配)。</li>
+<li>同步消除，如果你定义的对象的方法上有同步锁，但在运行时，却只有一个线程在访问，此时逃逸分析后的机器码，会去掉同步锁运行。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>堆上动态分配内存比栈上静态分配内存，开销大很多。</li>
+<li>变量分配在栈上需要能在编译期确定它的作用域，否则会分配到堆上。</li>
+<li>Go编译器会在编译期对考察变量的作用域，并作一系列检查，如果它的作用域在运行期间对编译器一直是可知的，那么就会分配到栈上。简单来说，编译器会根据变量是否被外部引用来决定是否逃逸。</li>
+<li>对于Go程序员来说，编译器的这些逃逸分析规则不需要掌握，我们只需通过go build -gcflags ‘-m’命令来观察变量逃逸情况就行了。</li>
+<li>不要盲目使用变量的指针作为函数参数，虽然它会减少复制操作。但其实当参数为变量自身的时候，复制是在栈上完成的操作，开销远比变量逃逸后动态地在堆上分配内存少的多。</li>
+<li>逃逸分析在编译阶段完成的。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Jonsson Yan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jonssonyan.com/2021/07/02/Go%E8%AF%AD%E8%A8%80%E8%AE%B0%E5%BD%95/" title="Go语言记录">https://jonssonyan.com/2021/07/02/Go语言记录/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-ND</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/29/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AASpring-Boot-Starter%E7%BB%84%E4%BB%B6/" rel="prev" title="手写一个Spring Boot Starter组件">
+      <i class="fa fa-chevron-left"></i> 手写一个Spring Boot Starter组件
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/02/Gin%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/" rel="next" title="Gin开发记录">
+      Gin开发记录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GO%E8%AF%AD%E8%A8%80%E5%8D%A0%E4%BD%8D%E7%AC%A6"><span class="nav-number">1.</span> <span class="nav-text">GO语言占位符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%AE%E9%80%9A%E5%8D%A0%E4%BD%8D%E7%AC%A6"><span class="nav-number">1.1.</span> <span class="nav-text">普通占位符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E5%8D%A0%E4%BD%8D%E7%AC%A6"><span class="nav-number">1.2.</span> <span class="nav-text">布尔占位符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E5%8D%A0%E4%BD%8D%E7%AC%A6"><span class="nav-number">1.3.</span> <span class="nav-text">整数占位符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E5%92%8C%E5%A4%8D%E6%95%B0%E7%9A%84%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86%EF%BC%88%E5%AE%9E%E9%83%A8%E5%92%8C%E8%99%9A%E9%83%A8%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">浮点数和复数的组成部分（实部和虚部）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E5%AD%97%E8%8A%82%E5%88%87%E7%89%87"><span class="nav-number">1.5.</span> <span class="nav-text">字符串与字节切片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E9%92%88"><span class="nav-number">1.6.</span> <span class="nav-text">指针</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go%E8%AF%AD%E8%A8%80%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83"><span class="nav-number">2.</span> <span class="nav-text">Go语言命名规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E5%90%8D%E7%A7%B0"><span class="nav-number">2.1.</span> <span class="nav-text">包名称</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D"><span class="nav-number">2.2.</span> <span class="nav-text">文件命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E5%91%BD%E5%90%8D"><span class="nav-number">2.3.</span> <span class="nav-text">结构体命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E5%91%BD%E5%90%8D"><span class="nav-number">2.4.</span> <span class="nav-text">接口命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%91%BD%E5%90%8D"><span class="nav-number">2.5.</span> <span class="nav-text">变量命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E9%87%8F%E5%91%BD%E5%90%8D"><span class="nav-number">2.6.</span> <span class="nav-text">常量命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="nav-number">2.7.</span> <span class="nav-text">错误处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="nav-number">2.8.</span> <span class="nav-text">单元测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E4%BD%BF%E7%94%A8%E6%8C%87%E9%92%88"><span class="nav-number">3.</span> <span class="nav-text">Go什么情况下使用指针</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go%E8%AF%AD%E8%A8%80%E5%86%85%E5%AD%98%E9%80%83%E9%80%B8"><span class="nav-number">4.</span> <span class="nav-text">Go语言内存逃逸</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%E5%91%A2%EF%BC%9F"><span class="nav-number">4.1.</span> <span class="nav-text">逃逸分析的作用是什么呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.2.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jonsson Yan"
+      src="/images/tx.jpg">
+  <p class="site-author-name" itemprop="name">Jonsson Yan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jonssonyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jonssonyan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yz808@outlook.com" title="E-Mail → mailto:yz808@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/jonssonyan" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;jonssonyan" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCzjTFFZo7K7PNdFUcA6w9aQ" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCzjTFFZo7K7PNdFUcA6w9aQ" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-nd.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jonsson Yan</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      requiredFields: ['nick','mail'],
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : false,
+      appId      : 'MLb8dLzGdyUG0QLBIGhrkklS-MdYXbMMI',
+      appKey     : 'r80fWmRBErFKOepUW55Lq7pt',
+      placeholder: "支持 Markdown 语法",
+      avatar     : 'monsterid',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
