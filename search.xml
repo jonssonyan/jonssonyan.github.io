@@ -296,6 +296,46 @@
 <li>不要盲目使用变量的指针作为函数参数，虽然它会减少复制操作。但其实当参数为变量自身的时候，复制是在栈上完成的操作，开销远比变量逃逸后动态地在堆上分配内存少的多。</li>
 <li>逃逸分析在编译阶段完成的。</li>
 </ol>
+<h1 id="go-mod"><a href="#go-mod" class="headerlink" title="go mod"></a>go mod</h1><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>download</td>
+<td>download modules to local cache(下载依赖包)</td>
+</tr>
+<tr>
+<td>edit</td>
+<td>edit go.mod from tools or scripts（编辑 go.mod）</td>
+</tr>
+<tr>
+<td>graph</td>
+<td>print module requirement graph (打印模块依赖图)</td>
+</tr>
+<tr>
+<td>init</td>
+<td>initialize new module in current directory（在当前目录初始化 mod）</td>
+</tr>
+<tr>
+<td>tidy</td>
+<td>add missing and remove unused modules(拉取缺少的模块，移除不用的模块)</td>
+</tr>
+<tr>
+<td>vendor</td>
+<td>make vendored copy of dependencies(将依赖复制到 vendor 下)</td>
+</tr>
+<tr>
+<td>verify</td>
+<td>verify dependencies have expected content (验证依赖是否正确）</td>
+</tr>
+<tr>
+<td>why</td>
+<td>explain why packages or modules are needed(解释为什么需要依赖)</td>
+</tr>
+</tbody></table>
 ]]></content>
   </entry>
   <entry>
@@ -1558,9 +1598,8 @@ Spring框架非常常用，必要的时候使用内置工具类可以减少第�
 <p>在安装完nodejs后，通过npm下载全局模块默认安装到<code>&#123;%USERDATA%&#125;C:\Users\username\AppData\</code>下的<code>Roaming\npm</code>下，这当然是不太对的默认。</p>
 <h1 id="npm模块安装路径配置"><a href="#npm模块安装路径配置" class="headerlink" title="npm模块安装路径配置"></a>npm模块安装路径配置</h1><p>不推荐Node.js安装在c盘<br>安装LTS版本的nodejs，nodejs安装路径会自动添加到PATH环境变量；<br>本文安装路径为：<code>D:\Applications\nodejs</code></p>
 <h2 id="在nodejs安装目录下创建一个node-cache文件夹"><a href="#在nodejs安装目录下创建一个node-cache文件夹" class="headerlink" title="在nodejs安装目录下创建一个node_cache文件夹"></a>在nodejs安装目录下创建一个node_cache文件夹</h2><p>node_modules在nodejs安装后会自动创建<br>注意：设置完npm插件的安装路径后，会在你设置的路径下自动创建一个node_modules文件夹来存储插件<br>缓存路径为创建的node_cache文件夹</p>
-<h2 id="运行以下两条cmd命令"><a href="#运行以下两条cmd命令" class="headerlink" title="运行以下两条cmd命令"></a>运行以下两条cmd命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> prefix <span class="string">&quot;D:\Applications\nodejs\node_global&quot;</span>　　//全局模块插件存放路径</span><br><span class="line">npm config <span class="built_in">set</span> cache <span class="string">&quot;D:\Applications\nodejs\node_cache&quot;</span>　　//缓存路径 warn:路径中不能包含空格否则npx使用不了</span><br></pre></td></tr></table></figure>
+<h2 id="运行以下两条cmd命令"><a href="#运行以下两条cmd命令" class="headerlink" title="运行以下两条cmd命令"></a>运行以下两条cmd命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 全局模块插件存放路径</span></span><br><span class="line">npm config <span class="built_in">set</span> prefix <span class="string">&quot;D:\Applications\nodejs\node_global&quot;</span></span><br><span class="line"><span class="comment"># 缓存路径 warn:路径中不能包含空格否则npx使用不了</span></span><br><span class="line">npm config <span class="built_in">set</span> cache <span class="string">&quot;D:\Applications\nodejs\node_cache&quot;</span></span><br><span class="line"><span class="comment"># 查看配置</span></span><br><span class="line">npm config list</span><br></pre></td></tr></table></figure>
 
-<p>设置完成后，我们可以通过<code>npm config list</code>来查看npm的配置</p>
 <h2 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h2><p>环境变量必须配置，否则npm模块插件无法运行</p>
 <p>将下面两个路径添加至环境变量</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">D:\Applications\nodejs</span><br><span class="line">D:\Applications\nodejs\node_global</span><br></pre></td></tr></table></figure>
@@ -1568,13 +1607,13 @@ Spring框架非常常用，必要的时候使用内置工具类可以减少第�
 <h1 id="npm使用淘宝的镜像"><a href="#npm使用淘宝的镜像" class="headerlink" title="npm使用淘宝的镜像"></a>npm使用淘宝的镜像</h1><h2 id="安装淘宝的cnpm，然后在使用时直接将npm命令替换成cnpm命令即可"><a href="#安装淘宝的cnpm，然后在使用时直接将npm命令替换成cnpm命令即可" class="headerlink" title="安装淘宝的cnpm，然后在使用时直接将npm命令替换成cnpm命令即可"></a>安装淘宝的cnpm，然后在使用时直接将npm命令替换成cnpm命令即可</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
 
 <h2 id="修改默认的仓库地址"><a href="#修改默认的仓库地址" class="headerlink" title="修改默认的仓库地址"></a>修改默认的仓库地址</h2><p>npm的默认地址是 <code>https://registry.npmjs.org/</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm config get registry // 查看npm的仓库地址</span><br><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org // 修改默认的仓库地址</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看npm的仓库地址</span></span><br><span class="line">npm config get registry</span><br><span class="line"><span class="comment"># 修改默认的仓库地址</span></span><br><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
 
-<h1 id="安装yarn"><a href="#安装yarn" class="headerlink" title="安装yarn"></a>安装yarn</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 全局安装</span><br><span class="line">npm install -g yarn</span><br><span class="line">// 查看版本号</span><br><span class="line">yarn --version</span><br><span class="line">// 设置yarn国内淘宝镜像</span><br><span class="line">yarn config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+<h1 id="安装yarn"><a href="#安装yarn" class="headerlink" title="安装yarn"></a>安装yarn</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">npm install -g yarn</span><br><span class="line"><span class="comment"># 查看版本号</span></span><br><span class="line">yarn --version</span><br><span class="line"><span class="comment"># 设置yarn国内淘宝镜像</span></span><br><span class="line">yarn config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br><span class="line"><span class="comment"># 设置依赖包全局下载地址</span></span><br><span class="line">yarn config <span class="built_in">set</span> global-folder <span class="string">&quot;D:\Applications\nodejs\node_global\node_modules\yarn\yarn_global&quot;</span></span><br><span class="line"><span class="comment"># 设置缓存路径</span></span><br><span class="line">yarn config <span class="built_in">set</span> cache-folder <span class="string">&quot;D:\Applications\nodejs\node_global\node_modules\yarn\yarn_cache&quot;</span></span><br><span class="line"><span class="comment"># 查看配置</span></span><br><span class="line">yarn config list</span><br></pre></td></tr></table></figure>
 
-<h1 id="安装Vue-CLI"><a href="#安装Vue-CLI" class="headerlink" title="安装Vue CLI"></a>安装Vue CLI</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 全局安装</span><br><span class="line">npm install -g @vue/cli</span><br><span class="line">// 查看版本号</span><br><span class="line">vue --version</span><br></pre></td></tr></table></figure>
+<h1 id="安装Vue-CLI"><a href="#安装Vue-CLI" class="headerlink" title="安装Vue CLI"></a>安装Vue CLI</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">npm install -g @vue/cli</span><br><span class="line"><span class="comment"># 查看版本号</span></span><br><span class="line">vue --version</span><br></pre></td></tr></table></figure>
 
-<h1 id="创建uni-app项目"><a href="#创建uni-app项目" class="headerlink" title="创建uni-app项目"></a>创建uni-app项目</h1><h2 id="通过vue-cli命令行"><a href="#通过vue-cli命令行" class="headerlink" title="通过vue-cli命令行"></a>通过vue-cli命令行</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 先全局安装vue cli</span><br><span class="line">npm install -g @vue/cli</span><br><span class="line">// 创建项目</span><br><span class="line">vue create -p dcloudio/uni-preset-vue my-project</span><br></pre></td></tr></table></figure>
+<h1 id="创建uni-app项目"><a href="#创建uni-app项目" class="headerlink" title="创建uni-app项目"></a>创建uni-app项目</h1><h2 id="通过vue-cli命令行"><a href="#通过vue-cli命令行" class="headerlink" title="通过vue-cli命令行"></a>通过vue-cli命令行</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 先全局安装vue cli</span></span><br><span class="line">npm install -g @vue/cli</span><br><span class="line"><span class="comment"># 创建项目</span></span><br><span class="line">vue create -p dcloudio/uni-preset-vue my-project</span><br></pre></td></tr></table></figure>
 
 <h2 id="运行、发布uni-app"><a href="#运行、发布uni-app" class="headerlink" title="运行、发布uni-app"></a>运行、发布uni-app</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm run dev:%PLATFORM%</span><br><span class="line">npm run build:%PLATFORM%</span><br></pre></td></tr></table></figure>
 
@@ -1631,7 +1670,7 @@ Spring框架非常常用，必要的时候使用内置工具类可以减少第�
 <td align="left">快应用华为</td>
 </tr>
 </tbody></table>
-<h1 id="可能出现的报错"><a href="#可能出现的报错" class="headerlink" title="可能出现的报错"></a>可能出现的报错</h1><h2 id="错误描述"><a href="#错误描述" class="headerlink" title="错误描述"></a>错误描述</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yarn : 无法将“yarn”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括路径，请确保路径正确</span><br><span class="line">，然后再试一次。</span><br><span class="line">所在位置 行:1 字符: 1</span><br><span class="line">+ yarn --version</span><br><span class="line">+ ~~~~</span><br><span class="line">    + CategoryInfo          : ObjectNotFound: (yarn:String) [], CommandNotFoundException</span><br><span class="line">    + FullyQualifiedErrorId : CommandNotFoundException</span><br></pre></td></tr></table></figure>
+<h1 id="可能出现的报错"><a href="#可能出现的报错" class="headerlink" title="可能出现的报错"></a>可能出现的报错</h1><h2 id="错误描述"><a href="#错误描述" class="headerlink" title="错误描述"></a>错误描述</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yarn : 无法将“yarn”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括路径，请确保路径正确</span><br><span class="line">，然后再试一次。</span><br><span class="line">所在位置 行:1 字符: 1</span><br><span class="line">+ yarn --version</span><br><span class="line">+ ~~~~</span><br><span class="line">    + CategoryInfo          : ObjectNotFound: (yarn:String) [], CommandNotFoundException</span><br><span class="line">    + FullyQualifiedErrorId : CommandNotFoundException</span><br></pre></td></tr></table></figure>
 
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ol>
 <li>以管理员身份运行PowerShell</li>
