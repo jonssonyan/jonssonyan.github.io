@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://files.mdnice.com/user/10819/17ad5efa-57bb-4a71-a225-c72b96eee979.png">
 <meta property="og:image" content="https://files.mdnice.com/user/10819/88f87bf7-b15e-495e-866d-a06ae1a88515.png">
 <meta property="article:published_time" content="2021-06-17T07:16:00.000Z">
-<meta property="article:modified_time" content="2021-06-17T15:28:46.842Z">
+<meta property="article:modified_time" content="2021-07-12T14:21:50.862Z">
 <meta property="article:author" content="Jonsson Yan">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -220,10 +220,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-06-17 15:16:00 / 修改时间：23:28:46" itemprop="dateCreated datePublished" datetime="2021-06-17T15:16:00+08:00">2021-06-17</time>
+              <time title="创建时间：2021-06-17 15:16:00" itemprop="dateCreated datePublished" datetime="2021-06-17T15:16:00+08:00">2021-06-17</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-12 22:21:50" itemprop="dateModified" datetime="2021-07-12T22:21:50+08:00">2021-07-12</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -291,7 +297,7 @@
 </blockquote>
 <h3 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/docker # 创建目录</span><br><span class="line">vi /etc/docker/daemon.json # 创建一个镜像配置文件</span><br></pre></td></tr></table></figure>
 
-<h3 id="配置文件中添加163镜像"><a href="#配置文件中添加163镜像" class="headerlink" title="配置文件中添加163镜像"></a>配置文件中添加163镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> &quot;registry-mirrors&quot;:[&quot;http://hub-mirror.c.163.com&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="配置文件中添加163镜像"><a href="#配置文件中添加163镜像" class="headerlink" title="配置文件中添加163镜像"></a>配置文件中添加163镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> &quot;registry-mirrors&quot;:[&quot;https://hub-mirror.c.163.com&quot;,&quot;https://docker.mirrors.ustc.edu.cn&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="重新加载文件并重启-docker"><a href="#重新加载文件并重启-docker" class="headerlink" title="重新加载文件并重启 docker"></a>重新加载文件并重启 docker</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload // 重新加载文件</span><br><span class="line">systemctl restart docker // 重启docker</span><br><span class="line">systemctl enable docker // 开机自启</span><br></pre></td></tr></table></figure>
 
@@ -448,7 +454,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -461,7 +467,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">30</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
